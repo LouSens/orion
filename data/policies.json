@@ -1,0 +1,76 @@
+{
+    "policies": [
+        {
+            "rule_id": "POL-001",
+            "title": "Auto-approval threshold",
+            "description": "Claims at or below MYR 500 with complete documentation may be auto-approved.",
+            "severity": "warn",
+            "applies_to": [
+                "all"
+            ]
+        },
+        {
+            "rule_id": "POL-002",
+            "title": "Manager escalation",
+            "description": "Claims above MYR 500 and at or below MYR 5000 require manager approval.",
+            "severity": "warn",
+            "applies_to": [
+                "all"
+            ]
+        },
+        {
+            "rule_id": "POL-003",
+            "title": "Finance escalation",
+            "description": "Claims above MYR 5000 require finance controller approval.",
+            "severity": "warn",
+            "applies_to": [
+                "all"
+            ]
+        },
+        {
+            "rule_id": "POL-004",
+            "title": "Business justification required",
+            "description": "All reimbursements must include a business justification of at least 10 characters.",
+            "severity": "block",
+            "applies_to": [
+                "all"
+            ]
+        },
+        {
+            "rule_id": "POL-005",
+            "title": "Approved category list",
+            "description": "Subscriptions must fall into one of: productivity, design, engineering, ai_tools, communication, analytics, security.",
+            "severity": "block",
+            "applies_to": [
+                "all"
+            ]
+        },
+        {
+            "rule_id": "POL-006",
+            "title": "No duplicate active subscription",
+            "description": "Employees may not claim for a SaaS product the organisation already licenses and can extend a seat on.",
+            "severity": "block",
+            "applies_to": [
+                "all"
+            ]
+        },
+        {
+            "rule_id": "POL-007",
+            "title": "Receipt required above MYR 100",
+            "description": "Any claim over MYR 100 requires a receipt or invoice.",
+            "severity": "block",
+            "applies_to": [
+                "all"
+            ]
+        },
+        {
+            "rule_id": "POL-008",
+            "title": "Annual plan preference",
+            "description": "For recurring SaaS over MYR 200/month, annual billing should be preferred when discount is meaningful.",
+            "severity": "warn",
+            "applies_to": [
+                "all"
+            ]
+        }
+    ]
+}

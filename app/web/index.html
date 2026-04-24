@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Orion Reimburse — Agentic Procurement Workflow</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+  :root { --bg:#0b0d12; --panel:#141823; --border:#222838; --text:#e5e9f2;
+          --muted:#8a93a6; --accent:#6ea8ff; --ok:#49c37a; --warn:#e7b450; --bad:#e76b6b; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text);
+         font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+         font-size:14px; line-height:1.5; }
+  header { padding:20px 28px; border-bottom:1px solid var(--border);
+           display:flex; justify-content:space-between; align-items:center; gap:12px; }
+  header h1 { margin:0; font-size:18px; font-weight:600; }
+  header .sub { color:var(--muted); font-size:12px; }
+  header .right { display:flex; gap:10px; align-items:center; }
+  header a { color:var(--accent); text-decoration:none; }
+  header a:hover { text-decoration:underline; }
+  .pill { padding:3px 10px; border-radius:10px; font-size:11px; font-weight:600;
+          background:#1d2333; border:1px solid var(--border); }
+  .pill.on { background:rgba(73,195,122,.15); color:var(--ok); border-color:transparent; }
+  .pill.off { background:rgba(231,107,107,.15); color:var(--bad); border-color:transparent; }
+  main { display:grid; grid-template-columns: 440px 1fr; gap:0; height:calc(100vh - 64px); }
+  .form-col { padding:24px; border-right:1px solid var(--border); overflow-y:auto; }
+  .result-col { padding:24px; overflow-y:auto; }
+  label { display:block; margin:14px 0 4px; color:var(--muted); font-size:11px;
+          text-transform:uppercase; letter-spacing:.06em; font-weight:600; }
+  input, textarea, select { width:100%; background:var(--panel); border:1px solid var(--border);
+         color:var(--text); padding:8px 10px; border-radius:6px;
+         font-family:inherit; font-size:13px; }
+  textarea { min-height:90px; resize:vertical; font-family:"SF Mono",Consolas,monospace; font-size:12px; }
+  button { margin-top:16px; background:var(--accent); color:#0b0d12; border:none;
+           padding:10px 16px; border-radius:6px; font-weight:600; cursor:pointer;
+           font-size:13px; width:100%; }
+  button:disabled { opacity:.5; cursor:not-allowed; }
+  .presets, .file-row { display:flex; gap:6px; flex-wrap:wrap; margin-top:6px; align-items:center; }
+  .presets button, .file-row .secondary {
+    width:auto; margin-top:0; background:var(--panel); color:var(--text);
+    border:1px solid var(--border); padding:4px 10px; font-size:12px; font-weight:400; }
+  .presets button:hover, .file-row .secondary:hover { border-color:var(--accent); }
+  .file-row input[type=file] { padding:4px; font-size:12px; }
+  .file-status { color:var(--muted); font-size:11px; margin-top:4px; }
+  .section { background:var(--panel); border:1px solid var(--border); border-radius:8px;
+             padding:14px 16px; margin-bottom:12px; }
+  .section h3 { margin:0 0 8px; font-size:12px; letter-spacing:.04em;
+                text-transform:uppercase; color:var(--muted); font-weight:600; }
+  pre { background:#0a0c11; padding:10px; border-radius:6px; overflow-x:auto;
+        font-size:12px; margin:0; font-family:"SF Mono",Consolas,monospace; }
+  .trace { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+  .trace span { background:#1d2333; border:1px solid var(--border); padding:3px 10px;
+                border-radius:12px; font-size:11px; font-family:"SF Mono",monospace; }
+  .trace .arrow { border:none; background:transparent; color:var(--muted); padding:0; }
+  .badge { display:inline-block; padding:2px 10px; border-radius:10px;
+           font-size:11px; font-weight:600; margin-left:8px; }
+  .badge.ok { background:rgba(73,195,122,.15); color:var(--ok); }
+  .badge.warn { background:rgba(231,180,80,.15); color:var(--warn); }
+  .badge.bad { background:rgba(231,107,107,.15); color:var(--bad); }
+  .muted { color:var(--muted); font-size:12px; }
+  .empty { color:var(--muted); font-style:italic; padding:40px; text-align:center; }
+  .trace-link { display:inline-flex; align-items:center; gap:6px; padding:6px 12px;
+                background:rgba(110,168,255,.12); color:var(--accent);
+                border:1px solid rgba(110,168,255,.3); border-radius:6px;
+                font-size:12px; text-decoration:none; margin-top:6px; }
+  .trace-link:hover { background:rgba(110,168,255,.2); }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Orion Reimburse</h1>
+    <div class="sub">Agentic subscription-reimbursement workflow &middot; ILMU GLM-5.1 &times; LangGraph &times; LangSmith</div>
+  </div>
+  <div class="right">
+    <span class="pill" id="pill-model">model: …</span>
+    <span class="pill" id="pill-ls">langsmith: …</span>
+    <a id="ls-project-link" href="#" target="_blank" rel="noopener" style="display:none;">LangSmith ↗</a>
+  </div>
+</header>
+
+<main>
+  <section class="form-col">
+    <label>Preset scenarios</label>
+    <div class="presets">
+      <button data-preset="clean">Clean claim</button>
+      <button data-preset="duplicate">Duplicate (Notion)</button>
+      <button data-preset="semantic-dup">Semantic dup (ChatGPT)</button>
+      <button data-preset="high-value">High value</button>
+      <button data-preset="ambiguous">Ambiguous</button>
+    </div>
+
+    <label>Employee ID</label>
+    <input id="employee_id" value="EMP-1021" />
+    <label>Employee name</label>
+    <input id="employee_name" value="Aisha Rahman" />
+    <label>Team</label>
+    <input id="employee_team" value="Design" />
+
+    <label>Free-text submission</label>
+    <textarea id="free_text"></textarea>
+
+    <label>Receipt / invoice text (optional)</label>
+    <textarea id="receipt_text"></textarea>
+
+    <label>Or attach a receipt document (PDF / DOCX / TXT)</label>
+    <div class="file-row">
+      <input type="file" id="file_input" accept=".pdf,.docx,.txt,.md" />
+      <button type="button" class="secondary" id="file_parse_btn">Extract text</button>
+    </div>
+    <div class="file-status" id="file_status"></div>
+
+    <button id="submit">Run workflow</button>
+    <div class="muted" id="status" style="margin-top:10px;"></div>
+  </section>
+
+  <section class="result-col" id="result">
+    <div class="empty">Submit a claim to see the agent trace.</div>
+  </section>
+</main>
+
+<script>
+const presets = {
+  clean: {
+    team: "Engineering",
+    free_text: "Hi, I'd like to expense my Claude Pro subscription for April. I use it daily for code review, design docs, and drafting RFCs. Amount was USD 20 which I paid on my corporate card on 10 April 2026. Conversion came out to MYR 94.50.",
+    receipt_text: "Anthropic PBC — Claude Pro Monthly — $20.00 USD — 2026-04-10 — VISA ending 1182"
+  },
+  duplicate: {
+    team: "Operations",
+    free_text: "I need Notion to manage my team's SOPs and knowledge base. Paid MYR 75 for a personal Notion Plus plan last week, please reimburse. Justification: team documentation.",
+    receipt_text: "Notion Labs Inc. — Notion Plus Monthly — USD 16.00 (~ MYR 75.40) — 2026-04-18"
+  },
+  "semantic-dup": {
+    team: "Marketing",
+    free_text: "Please reimburse my ChatGPT Plus subscription. I use it for campaign copy and competitive research. MYR 96 for this month.",
+    receipt_text: "OpenAI — ChatGPT Plus — $20.00 USD — 2026-04-15"
+  },
+  "high-value": {
+    team: "Engineering",
+    free_text: "We're piloting a dedicated observability tool for the payments service. I signed an annual contract with Datadog Pro: MYR 7,800 for the year, billed upfront. Need reimbursement — critical for the Q3 launch.",
+    receipt_text: "Datadog Inc. — Pro Annual — USD 1,656 (~ MYR 7,800) — Invoice #DD-2026-88421 — 2026-04-20"
+  },
+  ambiguous: {
+    team: "AI Platform",
+    free_text: "expensed a thing for the project, about 200 ringgit, please process",
+    receipt_text: ""
+  }
+};
+
+document.querySelectorAll('.presets button').forEach(b => {
+  b.onclick = () => {
+    const p = presets[b.dataset.preset];
+    document.getElementById('employee_team').value = p.team;
+    document.getElementById('free_text').value = p.free_text;
+    document.getElementById('receipt_text').value = p.receipt_text;
+    document.getElementById('file_status').textContent = "";
+  };
+});
+document.querySelector('.presets button').click();
+
+fetch('/api/health').then(r => r.json()).then(d => {
+  document.getElementById('pill-model').textContent = `model: ${d.model}`;
+  const p = document.getElementById('pill-ls');
+  p.textContent = `langsmith: ${d.langsmith ? 'on' : 'off'}`;
+  p.classList.add(d.langsmith ? 'on' : 'off');
+  if (d.langsmith) {
+    const a = document.getElementById('ls-project-link');
+    a.href = d.langsmith_dashboard || 'https://smith.langchain.com/';
+    a.style.display = 'inline';
+    a.textContent = `LangSmith • ${d.langsmith_project} ↗`;
+  }
+}).catch(() => {
+  document.getElementById('pill-model').textContent = 'model: offline';
+});
+
+document.getElementById('file_parse_btn').onclick = async () => {
+  const f = document.getElementById('file_input').files[0];
+  const status = document.getElementById('file_status');
+  if (!f) { status.textContent = "Choose a file first."; return; }
+  status.textContent = `Parsing ${f.name}…`;
+  const fd = new FormData();
+  fd.append('file', f);
+  try {
+    const res = await fetch('/api/parse-document', { method: 'POST', body: fd });
+    if (!res.ok) throw new Error(await res.text());
+    const d = await res.json();
+    document.getElementById('receipt_text').value = d.text;
+    status.textContent = `Extracted ${d.text.length.toLocaleString()} chars from ${d.kind.toUpperCase()}${d.page_count ? ` (${d.page_count} pages)` : ''}.`;
+  } catch (e) {
+    status.textContent = 'Parse error: ' + e.message;
+  }
+};
+
+const decisionBadge = (d) => {
+  if (!d) return '';
+  const m = {
+    auto_approve: 'ok', auto_reject: 'bad',
+    escalate_manager: 'warn', escalate_finance: 'warn',
+    request_info: 'warn'
+  };
+  return `<span class="badge ${m[d] || ''}">${d}</span>`;
+};
+
+const recBadge = (r) => {
+  if (!r) return '';
+  const m = { proceed: 'ok', suggest_alternative: 'warn', block_duplicate: 'bad' };
+  return `<span class="badge ${m[r] || ''}">${r}</span>`;
+};
+
+document.getElementById('submit').onclick = async () => {
+  const btn = document.getElementById('submit');
+  const status = document.getElementById('status');
+  btn.disabled = true;
+  status.textContent = 'Running agents…';
+  const body = {
+    employee_id: document.getElementById('employee_id').value,
+    employee_name: document.getElementById('employee_name').value,
+    employee_team: document.getElementById('employee_team').value,
+    free_text: document.getElementById('free_text').value,
+    receipt_text: document.getElementById('receipt_text').value || null,
+  };
+  try {
+    const res = await fetch('/api/submit', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) throw new Error(await res.text());
+    const data = await res.json();
+    render(data);
+    status.textContent = `Done — ${data.trace.length} agent steps.`;
+  } catch (e) {
+    status.textContent = 'Error: ' + e.message;
+  } finally {
+    btn.disabled = false;
+  }
+};
+
+function render(d) {
+  const sec = (title, body, badge='') => `
+    <div class="section">
+      <h3>${title}${badge}</h3>
+      ${body}
+    </div>`;
+  const pre = (o) => `<pre>${o == null ? '—' : escapeHtml(JSON.stringify(o, null, 2))}</pre>`;
+
+  const traceNodes = (d.trace || []).map((t, i) =>
+    (i > 0 ? '<span class="arrow">→</span>' : '') + `<span>${t}</span>`
+  ).join('');
+
+  let lsBlock = '';
+  if (d.langsmith && d.langsmith.enabled) {
+    const ls = d.langsmith;
+    const link = ls.run_url
+      ? `<a class="trace-link" href="${ls.run_url}" target="_blank" rel="noopener">Open run in LangSmith ↗</a>`
+      : `<a class="trace-link" href="${ls.project_url}" target="_blank" rel="noopener">Open project <b>${ls.project}</b> in LangSmith ↗</a>`;
+    lsBlock = `<div style="margin-top:10px;">${link}
+      <div class="muted" style="margin-top:4px;">run_id: ${ls.run_id || '—'}</div></div>`;
+  }
+
+  document.getElementById('result').innerHTML = `
+    ${sec('Claim ID · ' + d.claim_id, `<div class="trace">${traceNodes}</div>${lsBlock}`)}
+    ${sec('1. Intake — unstructured → structured', pre(d.intake))}
+    ${sec('2. Intelligence — dup detection & alternatives', pre(d.intelligence),
+         recBadge(d.intelligence && d.intelligence.recommendation))}
+    ${sec('3. Policy compliance', pre(d.policy),
+         d.policy ? `<span class="badge ${d.policy.compliant ? 'ok' : 'bad'}">${d.policy.compliant ? 'compliant' : 'non-compliant'}</span>` : '')}
+    ${sec('4. Validation', pre(d.validation))}
+    ${sec('5. Approval decision', pre(d.approval),
+         decisionBadge(d.approval && d.approval.decision))}
+    ${sec('6. Ledger record', pre(d.record))}
+  `;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+}
+</script>
+</body>
+</html>

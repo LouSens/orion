@@ -1,0 +1,40 @@
+{
+  "records": [
+    {
+      "claim_id": "CLM-TEST",
+      "employee_id": "E001",
+      "vendor": "Figma Inc.",
+      "product": "Figma Professional Plan",
+      "amount_myr": 680.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-24T17:50:59.081403+00:00",
+      "notification_sent_to": [
+        "employee:E001"
+      ]
+    },
+    {
+      "claim_id": "CLM-F62E96C6",
+      "employee_id": "E002",
+      "vendor": "GitHub",
+      "product": "Copilot Business",
+      "amount_myr": 95.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-24T17:53:53.118476+00:00",
+      "notification_sent_to": [
+        "employee:E002"
+      ]
+    },
+    {
+      "claim_id": "CLM-7661C734",
+      "employee_id": "EMP-1021",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Plus",
+      "amount_myr": 0.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-24T17:56:41.510277+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1021"
+      ]
+    }
+  ]
+}

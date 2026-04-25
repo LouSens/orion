@@ -133,7 +133,7 @@ def submit(payload: ReimbursementSubmission) -> JSONResponse:
         "submission_hash": sub_hash,  # P1.6: recorder will persist this
         "trace": [],
         "retry_count": 0,
-        "supervisor_visits": 1,
+        "supervisor_visits": 0,
         "terminal": False,
         "error": None,
     }

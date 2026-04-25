@@ -4,10 +4,14 @@ Every agent reads what it needs from here and writes back its structured
 report. The supervisor node routes on the union of signals present —
 that's what makes the engine *stateful and adaptive* instead of a fixed
 pipeline.
+
+Note on `trace`: uses operator.add reducer so parallel branches
+(intelligence ∥ policy_check) can each append their entry without conflict.
 """
 from __future__ import annotations
 
-from typing import Optional, TypedDict
+import operator
+from typing import Annotated, Optional, TypedDict
 
 from .schemas import (
     ApprovalOutcome,
@@ -16,7 +20,7 @@ from .schemas import (
     LedgerRecord,
     PolicyReport,
     ReimbursementSubmission,
-    ValidationReport,
+    SupervisorDecision,
 )
 
 
@@ -29,12 +33,14 @@ class WorkflowState(TypedDict, total=False):
     intake: IntakeClaim
     intelligence: IntelligenceReport
     policy: PolicyReport
-    validation: ValidationReport
+    supervisor: SupervisorDecision
     approval: ApprovalOutcome
     record: LedgerRecord
 
     # Control
     retry_count: int
+    supervisor_visits: int  # hard termination counter — forces escalation at >= 3
+    submission_hash: Optional[str]  # SHA256 fingerprint for idempotency dedup (P1.6)
     terminal: bool
     error: Optional[str]
-    trace: list[str]  # ordered list of nodes visited — for the demo UI
+    trace: Annotated[list[str], operator.add]  # reducer: parallel nodes each append one entry

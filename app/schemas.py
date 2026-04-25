@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from datetime import date
 from enum import Enum
-from typing import Literal, Optional
+from typing import List, Literal, Optional
 
 from pydantic import BaseModel, Field
 
@@ -32,6 +32,9 @@ class IntakeClaim(BaseModel):
     confidence: float = Field(0.5, ge=0, le=1, description="Self-reported extraction confidence")
     missing_fields: list[str] = Field(default_factory=list)
     notes: Optional[str] = None
+    regex_extracted_amount: Optional[float] = Field(
+        None, description="Largest currency token found by regex pre-pass — anti-hallucination anchor"
+    )
 
 
 # ---------- Intelligence Agent --------------------------------------------
@@ -61,7 +64,7 @@ class IntelligenceReport(BaseModel):
     rationale: str
 
 
-# ---------- Policy Agent ---------------------------------------------------
+# ---------- Policy Engine --------------------------------------------------
 
 
 class PolicyViolation(BaseModel):
@@ -70,28 +73,50 @@ class PolicyViolation(BaseModel):
     severity: Literal["warn", "block"]
 
 
+class HardPolicyResult(BaseModel):
+    hard_violations: list[PolicyViolation]
+    routing_hints: list[str]
+    ambiguous_flags: list[str]
+    fast_reject: bool
+
+
 class PolicyReport(BaseModel):
     compliant: bool
     applied_rules: list[str]
-    violations: list[PolicyViolation] = Field(default_factory=list)
+    violations: list[PolicyViolation] = Field(default_factory=list)  # kept for recorder compat
+    hard_violations: list[PolicyViolation] = Field(default_factory=list)
+    routing_hints: list[str] = Field(default_factory=list)
+    ambiguous_flags: list[str] = Field(default_factory=list)
+    fast_reject: bool = False
     summary: str
 
 
-# ---------- Validation Agent ----------------------------------------------
+# ---------- Supervisor Agent ----------------------------------------------
 
 
-class ClarificationRequest(BaseModel):
-    field: str
-    question: str
+class SupervisorRoute(str, Enum):
+    """The five routing destinations the Supervisor can choose."""
+    route_to_approval           = "route_to_approval"
+    route_back_to_intelligence  = "route_back_to_intelligence"
+    route_back_to_policy        = "route_back_to_policy"
+    request_human_escalation    = "request_human_escalation"
+    request_user_clarification  = "request_user_clarification"
 
 
-class ValidationReport(BaseModel):
-    ready_for_decision: bool
-    clarifications: list[ClarificationRequest] = Field(default_factory=list)
-    summary: str
+class SupervisorDecision(BaseModel):
+    route: SupervisorRoute
+    reasoning: str = Field(..., description="Natural-language justification for the routing choice.")
+    focus_areas: List[str] = Field(
+        default_factory=list,
+        description="Specific aspects the next agent should investigate or re-examine.",
+    )
+    clarification_questions: List[str] = Field(
+        default_factory=list,
+        description="Populated only when route=request_user_clarification. Max 3 questions.",
+    )
 
 
-# ---------- Approval Agent ------------------------------------------------
+# ---------- Approval / Critic Agent ----------------------------------------
 
 
 class ApprovalDecision(str, Enum):
@@ -122,6 +147,9 @@ class LedgerRecord(BaseModel):
     decision: ApprovalDecision
     recorded_at: str
     notification_sent_to: list[str] = Field(default_factory=list)
+    submission_hash: Optional[str] = Field(
+        None, description="SHA256 of submission content (excl. timestamp) — used for idempotency dedup"
+    )
 
 
 # ---------- Submission (inbound) ------------------------------------------

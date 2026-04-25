@@ -44,10 +44,19 @@ class Settings(BaseSettings):
 
     # ---- Per-agent LLM config ----
     cfg_intake: AgentLLMConfig = AgentLLMConfig(temperature=0.1, max_tokens=1400)
-    cfg_intelligence: AgentLLMConfig = AgentLLMConfig(temperature=0.2, max_tokens=1600)
+    cfg_intelligence: AgentLLMConfig = AgentLLMConfig(temperature=0.2, max_tokens=2000)  # higher for tool-loop
+    cfg_supervisor: AgentLLMConfig = AgentLLMConfig(temperature=0.0, max_tokens=800)    # deterministic routing
     cfg_policy: AgentLLMConfig = AgentLLMConfig(temperature=0.0, max_tokens=1600)
     cfg_validation: AgentLLMConfig = AgentLLMConfig(temperature=0.1, max_tokens=900)
     cfg_approval: AgentLLMConfig = AgentLLMConfig(temperature=0.0, max_tokens=800)
+
+    # ---- Intelligence tool-loop cap ----
+    intelligence_max_iterations: int = 5
+
+    # ---- Fuzzy match tuning (P2.2) ----
+    fuzzy_match_threshold: float = 55.0    # min rapidfuzz partial_ratio score to include a match
+    fuzzy_top_k: int = 10                  # max candidates passed into fuzzy scorer
+    fuzzy_debug_logging: bool = False      # print match scores to stdout for tuning
 
     # ---- Paths ----
     project_root: Path = Path(__file__).resolve().parent.parent
@@ -77,3 +86,8 @@ def wire_langsmith() -> None:
         os.environ["LANGSMITH_PROJECT"] = settings.langsmith_project
         os.environ["LANGSMITH_ENDPOINT"] = settings.langsmith_endpoint
         os.environ["LANGCHAIN_PROJECT"] = settings.langsmith_project
+    else:
+        # Explicitly disable so the SDK doesn't attempt to send traces
+        # even if stale env vars are present from a previous session.
+        os.environ["LANGSMITH_TRACING"] = "false"
+        os.environ["LANGCHAIN_TRACING_V2"] = "false"

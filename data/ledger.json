@@ -1,6 +1,1023 @@
 {
   "records": [
     {
+      "claim_id": "CLM-0001",
+      "employee_id": "E001",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Team Plan",
+      "amount_myr": 250.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-10-05T09:12:00+00:00",
+      "notification_sent_to": [
+        "employee:E001"
+      ]
+    },
+    {
+      "claim_id": "CLM-0002",
+      "employee_id": "E002",
+      "vendor": "GitHub Inc.",
+      "product": "GitHub Copilot Individual",
+      "amount_myr": 105.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-10-08T11:20:00+00:00",
+      "notification_sent_to": [
+        "employee:E002"
+      ]
+    },
+    {
+      "claim_id": "CLM-0003",
+      "employee_id": "E004",
+      "vendor": "Zoom Video Communications",
+      "product": "Zoom Pro",
+      "amount_myr": 80.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-10-12T14:05:00+00:00",
+      "notification_sent_to": [
+        "employee:E004"
+      ]
+    },
+    {
+      "claim_id": "CLM-0004",
+      "employee_id": "E005",
+      "vendor": "Linear",
+      "product": "Linear Standard",
+      "amount_myr": 180.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-10-15T10:30:00+00:00",
+      "notification_sent_to": [
+        "employee:E005"
+      ]
+    },
+    {
+      "claim_id": "CLM-0005",
+      "employee_id": "E006",
+      "vendor": "Loom Inc.",
+      "product": "Loom Business",
+      "amount_myr": 120.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-10-20T09:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E006"
+      ]
+    },
+    {
+      "claim_id": "CLM-0006",
+      "employee_id": "E008",
+      "vendor": "Grammarly Inc.",
+      "product": "Grammarly Business",
+      "amount_myr": 95.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-10-22T15:45:00+00:00",
+      "notification_sent_to": [
+        "employee:E008"
+      ]
+    },
+    {
+      "claim_id": "CLM-0007",
+      "employee_id": "E009",
+      "vendor": "Canva",
+      "product": "Canva for Teams",
+      "amount_myr": 75.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-10-25T08:20:00+00:00",
+      "notification_sent_to": [
+        "employee:E009"
+      ]
+    },
+    {
+      "claim_id": "CLM-0008",
+      "employee_id": "E010",
+      "vendor": "Perplexity AI",
+      "product": "Perplexity Pro",
+      "amount_myr": 90.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-10-28T11:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E010"
+      ]
+    },
+    {
+      "claim_id": "CLM-0009",
+      "employee_id": "E012",
+      "vendor": "Anthropic",
+      "product": "Claude Pro",
+      "amount_myr": 110.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-10-30T13:15:00+00:00",
+      "notification_sent_to": [
+        "employee:E012"
+      ]
+    },
+    {
+      "claim_id": "CLM-0010",
+      "employee_id": "E013",
+      "vendor": "Typeform",
+      "product": "Typeform Business",
+      "amount_myr": 200.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-11-02T10:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E013"
+      ]
+    },
+    {
+      "claim_id": "CLM-0011",
+      "employee_id": "E001",
+      "vendor": "Figma Inc.",
+      "product": "Figma Professional Plan",
+      "amount_myr": 340.0,
+      "decision": "escalate_manager",
+      "recorded_at": "2025-11-05T09:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E001",
+        "manager:M001"
+      ]
+    },
+    {
+      "claim_id": "CLM-0012",
+      "employee_id": "E002",
+      "vendor": "JetBrains",
+      "product": "IntelliJ IDEA Ultimate",
+      "amount_myr": 460.0,
+      "decision": "escalate_manager",
+      "recorded_at": "2025-11-08T14:30:00+00:00",
+      "notification_sent_to": [
+        "employee:E002",
+        "manager:M002"
+      ]
+    },
+    {
+      "claim_id": "CLM-0013",
+      "employee_id": "E004",
+      "vendor": "Adobe",
+      "product": "Adobe Creative Cloud",
+      "amount_myr": 650.0,
+      "decision": "escalate_manager",
+      "recorded_at": "2025-11-10T11:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E004",
+        "manager:M004"
+      ]
+    },
+    {
+      "claim_id": "CLM-0014",
+      "employee_id": "E005",
+      "vendor": "Datadog Inc.",
+      "product": "Datadog Pro",
+      "amount_myr": 1200.0,
+      "decision": "escalate_manager",
+      "recorded_at": "2025-11-12T09:45:00+00:00",
+      "notification_sent_to": [
+        "employee:E005",
+        "manager:M005"
+      ]
+    },
+    {
+      "claim_id": "CLM-0015",
+      "employee_id": "E006",
+      "vendor": "Sentry",
+      "product": "Sentry Team",
+      "amount_myr": 380.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-11-15T10:20:00+00:00",
+      "notification_sent_to": [
+        "employee:E006"
+      ]
+    },
+    {
+      "claim_id": "CLM-0016",
+      "employee_id": "E003",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Plus",
+      "amount_myr": 250.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-11-01T09:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E003"
+      ]
+    },
+    {
+      "claim_id": "CLM-0017",
+      "employee_id": "E003",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Plus",
+      "amount_myr": 250.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-12-01T09:05:00+00:00",
+      "notification_sent_to": [
+        "employee:E003"
+      ]
+    },
+    {
+      "claim_id": "CLM-0018",
+      "employee_id": "E003",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Plus",
+      "amount_myr": 250.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-01-02T09:10:00+00:00",
+      "notification_sent_to": [
+        "employee:E003"
+      ]
+    },
+    {
+      "claim_id": "CLM-0019",
+      "employee_id": "E003",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Plus",
+      "amount_myr": 250.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-02-01T09:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E003"
+      ]
+    },
+    {
+      "claim_id": "CLM-0020",
+      "employee_id": "E003",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Plus",
+      "amount_myr": 250.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-03-03T09:15:00+00:00",
+      "notification_sent_to": [
+        "employee:E003"
+      ]
+    },
+    {
+      "claim_id": "CLM-0021",
+      "employee_id": "E003",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Plus",
+      "amount_myr": 250.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-01T09:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E003"
+      ]
+    },
+    {
+      "claim_id": "CLM-0022",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Grab Business Ride",
+      "amount_myr": 22.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-11-20T18:30:00+00:00",
+      "notification_sent_to": [
+        "employee:E007"
+      ]
+    },
+    {
+      "claim_id": "CLM-0023",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Grab Business Ride",
+      "amount_myr": 18.5,
+      "decision": "auto_approve",
+      "recorded_at": "2025-12-18T19:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E007"
+      ]
+    },
+    {
+      "claim_id": "CLM-0024",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Grab Business Ride",
+      "amount_myr": 24.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-01-22T20:15:00+00:00",
+      "notification_sent_to": [
+        "employee:E007"
+      ]
+    },
+    {
+      "claim_id": "CLM-0025",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Grab Business Ride",
+      "amount_myr": 21.5,
+      "decision": "auto_approve",
+      "recorded_at": "2026-02-19T18:45:00+00:00",
+      "notification_sent_to": [
+        "employee:E007"
+      ]
+    },
+    {
+      "claim_id": "CLM-0026",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Grab Business Ride",
+      "amount_myr": 20.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-03-20T17:30:00+00:00",
+      "notification_sent_to": [
+        "employee:E007"
+      ]
+    },
+    {
+      "claim_id": "CLM-0027",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Grab Business Ride",
+      "amount_myr": 25.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-20T09:10:00+00:00",
+      "notification_sent_to": [
+        "employee:E007"
+      ]
+    },
+    {
+      "claim_id": "CLM-0028",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Grab Business Ride",
+      "amount_myr": 19.5,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-21T11:25:00+00:00",
+      "notification_sent_to": [
+        "employee:E007"
+      ]
+    },
+    {
+      "claim_id": "CLM-0029",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Grab Business Ride",
+      "amount_myr": 23.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-22T14:40:00+00:00",
+      "notification_sent_to": [
+        "employee:E007"
+      ]
+    },
+    {
+      "claim_id": "CLM-0030",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Grab Business Ride",
+      "amount_myr": 22.5,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-23T16:55:00+00:00",
+      "notification_sent_to": [
+        "employee:E007"
+      ]
+    },
+    {
+      "claim_id": "CLM-0031",
+      "employee_id": "E011",
+      "vendor": "Starbucks",
+      "product": "Starbucks coffee (team meeting)",
+      "amount_myr": 485.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-22T12:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E011"
+      ]
+    },
+    {
+      "claim_id": "CLM-0032",
+      "employee_id": "E001",
+      "vendor": "Linear",
+      "product": "Linear Standard",
+      "amount_myr": 180.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-11-20T09:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E001"
+      ]
+    },
+    {
+      "claim_id": "CLM-0033",
+      "employee_id": "E002",
+      "vendor": "Perplexity AI",
+      "product": "Perplexity Pro",
+      "amount_myr": 90.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-11-22T10:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E002"
+      ]
+    },
+    {
+      "claim_id": "CLM-0034",
+      "employee_id": "E004",
+      "vendor": "Grammarly Inc.",
+      "product": "Grammarly Business",
+      "amount_myr": 95.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-11-25T11:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E004"
+      ]
+    },
+    {
+      "claim_id": "CLM-0035",
+      "employee_id": "E005",
+      "vendor": "Miro",
+      "product": "Miro Business",
+      "amount_myr": 210.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-11-28T14:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E005"
+      ]
+    },
+    {
+      "claim_id": "CLM-0036",
+      "employee_id": "E006",
+      "vendor": "Zoom Video Communications",
+      "product": "Zoom Pro",
+      "amount_myr": 80.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-12-02T09:30:00+00:00",
+      "notification_sent_to": [
+        "employee:E006"
+      ]
+    },
+    {
+      "claim_id": "CLM-0037",
+      "employee_id": "E008",
+      "vendor": "Anthropic",
+      "product": "Claude Pro",
+      "amount_myr": 110.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-12-05T10:15:00+00:00",
+      "notification_sent_to": [
+        "employee:E008"
+      ]
+    },
+    {
+      "claim_id": "CLM-0038",
+      "employee_id": "E009",
+      "vendor": "Loom Inc.",
+      "product": "Loom Business",
+      "amount_myr": 120.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-12-08T11:45:00+00:00",
+      "notification_sent_to": [
+        "employee:E009"
+      ]
+    },
+    {
+      "claim_id": "CLM-0039",
+      "employee_id": "E010",
+      "vendor": "Typeform",
+      "product": "Typeform Business",
+      "amount_myr": 200.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-12-10T13:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E010"
+      ]
+    },
+    {
+      "claim_id": "CLM-0040",
+      "employee_id": "E012",
+      "vendor": "Figma Inc.",
+      "product": "Figma Professional Plan",
+      "amount_myr": 340.0,
+      "decision": "escalate_manager",
+      "recorded_at": "2025-12-12T14:30:00+00:00",
+      "notification_sent_to": [
+        "employee:E012",
+        "manager:M012"
+      ]
+    },
+    {
+      "claim_id": "CLM-0041",
+      "employee_id": "E013",
+      "vendor": "GitHub Inc.",
+      "product": "GitHub Copilot Individual",
+      "amount_myr": 105.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-12-15T09:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E013"
+      ]
+    },
+    {
+      "claim_id": "CLM-0042",
+      "employee_id": "E014",
+      "vendor": "Sentry",
+      "product": "Sentry Team",
+      "amount_myr": 380.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-12-18T10:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E014"
+      ]
+    },
+    {
+      "claim_id": "CLM-0043",
+      "employee_id": "E015",
+      "vendor": "Linear",
+      "product": "Linear Standard",
+      "amount_myr": 180.0,
+      "decision": "auto_approve",
+      "recorded_at": "2025-12-20T11:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E015"
+      ]
+    },
+    {
+      "claim_id": "CLM-0044",
+      "employee_id": "E001",
+      "vendor": "Canva",
+      "product": "Canva for Teams",
+      "amount_myr": 75.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-01-05T09:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E001"
+      ]
+    },
+    {
+      "claim_id": "CLM-0045",
+      "employee_id": "E002",
+      "vendor": "Zoom Video Communications",
+      "product": "Zoom Pro",
+      "amount_myr": 80.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-01-08T10:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E002"
+      ]
+    },
+    {
+      "claim_id": "CLM-0046",
+      "employee_id": "E004",
+      "vendor": "Miro",
+      "product": "Miro Business",
+      "amount_myr": 210.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-01-10T11:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E004"
+      ]
+    },
+    {
+      "claim_id": "CLM-0047",
+      "employee_id": "E005",
+      "vendor": "Anthropic",
+      "product": "Claude Pro",
+      "amount_myr": 110.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-01-12T14:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E005"
+      ]
+    },
+    {
+      "claim_id": "CLM-0048",
+      "employee_id": "E006",
+      "vendor": "Grammarly Inc.",
+      "product": "Grammarly Business",
+      "amount_myr": 95.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-01-15T09:30:00+00:00",
+      "notification_sent_to": [
+        "employee:E006"
+      ]
+    },
+    {
+      "claim_id": "CLM-0049",
+      "employee_id": "E008",
+      "vendor": "Perplexity AI",
+      "product": "Perplexity Pro",
+      "amount_myr": 90.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-01-18T10:15:00+00:00",
+      "notification_sent_to": [
+        "employee:E008"
+      ]
+    },
+    {
+      "claim_id": "CLM-0050",
+      "employee_id": "E009",
+      "vendor": "Figma Inc.",
+      "product": "Figma Professional Plan",
+      "amount_myr": 340.0,
+      "decision": "escalate_manager",
+      "recorded_at": "2026-01-20T11:45:00+00:00",
+      "notification_sent_to": [
+        "employee:E009",
+        "manager:M009"
+      ]
+    },
+    {
+      "claim_id": "CLM-0051",
+      "employee_id": "E010",
+      "vendor": "JetBrains",
+      "product": "IntelliJ IDEA Ultimate",
+      "amount_myr": 460.0,
+      "decision": "escalate_manager",
+      "recorded_at": "2026-01-22T13:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E010",
+        "manager:M010"
+      ]
+    },
+    {
+      "claim_id": "CLM-0052",
+      "employee_id": "E012",
+      "vendor": "Loom Inc.",
+      "product": "Loom Business",
+      "amount_myr": 120.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-01-25T14:30:00+00:00",
+      "notification_sent_to": [
+        "employee:E012"
+      ]
+    },
+    {
+      "claim_id": "CLM-0053",
+      "employee_id": "E013",
+      "vendor": "Linear",
+      "product": "Linear Standard",
+      "amount_myr": 180.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-01-28T09:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E013"
+      ]
+    },
+    {
+      "claim_id": "CLM-0054",
+      "employee_id": "E014",
+      "vendor": "Canva",
+      "product": "Canva for Teams",
+      "amount_myr": 75.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-02-02T10:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E014"
+      ]
+    },
+    {
+      "claim_id": "CLM-0055",
+      "employee_id": "E015",
+      "vendor": "Anthropic",
+      "product": "Claude Pro",
+      "amount_myr": 110.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-02-05T11:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E015"
+      ]
+    },
+    {
+      "claim_id": "CLM-0056",
+      "employee_id": "E001",
+      "vendor": "Perplexity AI",
+      "product": "Perplexity Pro",
+      "amount_myr": 90.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-02-08T14:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E001"
+      ]
+    },
+    {
+      "claim_id": "CLM-0057",
+      "employee_id": "E002",
+      "vendor": "Sentry",
+      "product": "Sentry Team",
+      "amount_myr": 380.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-02-10T09:30:00+00:00",
+      "notification_sent_to": [
+        "employee:E002"
+      ]
+    },
+    {
+      "claim_id": "CLM-0058",
+      "employee_id": "E004",
+      "vendor": "Loom Inc.",
+      "product": "Loom Business",
+      "amount_myr": 120.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-02-12T10:15:00+00:00",
+      "notification_sent_to": [
+        "employee:E004"
+      ]
+    },
+    {
+      "claim_id": "CLM-0059",
+      "employee_id": "E005",
+      "vendor": "Typeform",
+      "product": "Typeform Business",
+      "amount_myr": 200.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-02-15T11:45:00+00:00",
+      "notification_sent_to": [
+        "employee:E005"
+      ]
+    },
+    {
+      "claim_id": "CLM-0060",
+      "employee_id": "E006",
+      "vendor": "Zoom Video Communications",
+      "product": "Zoom Pro",
+      "amount_myr": 80.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-02-18T13:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E006"
+      ]
+    },
+    {
+      "claim_id": "CLM-0061",
+      "employee_id": "E008",
+      "vendor": "Miro",
+      "product": "Miro Business",
+      "amount_myr": 210.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-02-20T14:30:00+00:00",
+      "notification_sent_to": [
+        "employee:E008"
+      ]
+    },
+    {
+      "claim_id": "CLM-0062",
+      "employee_id": "E009",
+      "vendor": "Linear",
+      "product": "Linear Standard",
+      "amount_myr": 180.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-02-22T09:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E009"
+      ]
+    },
+    {
+      "claim_id": "CLM-0063",
+      "employee_id": "E010",
+      "vendor": "GitHub Inc.",
+      "product": "GitHub Copilot Individual",
+      "amount_myr": 105.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-02-25T10:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E010"
+      ]
+    },
+    {
+      "claim_id": "CLM-0064",
+      "employee_id": "E012",
+      "vendor": "Grammarly Inc.",
+      "product": "Grammarly Business",
+      "amount_myr": 95.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-03-01T11:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E012"
+      ]
+    },
+    {
+      "claim_id": "CLM-0065",
+      "employee_id": "E013",
+      "vendor": "Canva",
+      "product": "Canva for Teams",
+      "amount_myr": 75.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-03-05T14:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E013"
+      ]
+    },
+    {
+      "claim_id": "CLM-0066",
+      "employee_id": "E014",
+      "vendor": "Anthropic",
+      "product": "Claude Pro",
+      "amount_myr": 110.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-03-08T09:30:00+00:00",
+      "notification_sent_to": [
+        "employee:E014"
+      ]
+    },
+    {
+      "claim_id": "CLM-0067",
+      "employee_id": "E015",
+      "vendor": "Perplexity AI",
+      "product": "Perplexity Pro",
+      "amount_myr": 90.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-03-10T10:15:00+00:00",
+      "notification_sent_to": [
+        "employee:E015"
+      ]
+    },
+    {
+      "claim_id": "CLM-0068",
+      "employee_id": "E001",
+      "vendor": "Figma Inc.",
+      "product": "Figma Professional Plan",
+      "amount_myr": 340.0,
+      "decision": "escalate_manager",
+      "recorded_at": "2026-03-12T11:45:00+00:00",
+      "notification_sent_to": [
+        "employee:E001",
+        "manager:M001"
+      ]
+    },
+    {
+      "claim_id": "CLM-0069",
+      "employee_id": "E002",
+      "vendor": "Linear",
+      "product": "Linear Standard",
+      "amount_myr": 180.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-03-15T13:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E002"
+      ]
+    },
+    {
+      "claim_id": "CLM-0070",
+      "employee_id": "E004",
+      "vendor": "Typeform",
+      "product": "Typeform Business",
+      "amount_myr": 200.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-03-18T14:30:00+00:00",
+      "notification_sent_to": [
+        "employee:E004"
+      ]
+    },
+    {
+      "claim_id": "CLM-0071",
+      "employee_id": "E005",
+      "vendor": "Loom Inc.",
+      "product": "Loom Business",
+      "amount_myr": 120.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-03-20T09:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E005"
+      ]
+    },
+    {
+      "claim_id": "CLM-0072",
+      "employee_id": "E006",
+      "vendor": "JetBrains",
+      "product": "IntelliJ IDEA Ultimate",
+      "amount_myr": 460.0,
+      "decision": "escalate_manager",
+      "recorded_at": "2026-03-22T10:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E006",
+        "manager:M006"
+      ]
+    },
+    {
+      "claim_id": "CLM-0073",
+      "employee_id": "E008",
+      "vendor": "GitHub Inc.",
+      "product": "GitHub Copilot Individual",
+      "amount_myr": 105.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-03-25T11:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E008"
+      ]
+    },
+    {
+      "claim_id": "CLM-0074",
+      "employee_id": "E009",
+      "vendor": "Zoom Video Communications",
+      "product": "Zoom Pro",
+      "amount_myr": 80.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-03-28T14:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E009"
+      ]
+    },
+    {
+      "claim_id": "CLM-0075",
+      "employee_id": "E010",
+      "vendor": "Sentry",
+      "product": "Sentry Team",
+      "amount_myr": 380.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-01T09:30:00+00:00",
+      "notification_sent_to": [
+        "employee:E010"
+      ]
+    },
+    {
+      "claim_id": "CLM-0076",
+      "employee_id": "E012",
+      "vendor": "Miro",
+      "product": "Miro Business",
+      "amount_myr": 210.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-03T10:15:00+00:00",
+      "notification_sent_to": [
+        "employee:E012"
+      ]
+    },
+    {
+      "claim_id": "CLM-0077",
+      "employee_id": "E013",
+      "vendor": "Anthropic",
+      "product": "Claude Pro",
+      "amount_myr": 110.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-05T11:45:00+00:00",
+      "notification_sent_to": [
+        "employee:E013"
+      ]
+    },
+    {
+      "claim_id": "CLM-0078",
+      "employee_id": "E014",
+      "vendor": "Grammarly Inc.",
+      "product": "Grammarly Business",
+      "amount_myr": 95.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-08T13:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E014"
+      ]
+    },
+    {
+      "claim_id": "CLM-0079",
+      "employee_id": "E015",
+      "vendor": "Canva",
+      "product": "Canva for Teams",
+      "amount_myr": 75.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-10T14:30:00+00:00",
+      "notification_sent_to": [
+        "employee:E015"
+      ]
+    },
+    {
+      "claim_id": "CLM-0080",
+      "employee_id": "E001",
+      "vendor": "Perplexity AI",
+      "product": "Perplexity Pro",
+      "amount_myr": 90.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-12T09:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E001"
+      ]
+    },
+    {
+      "claim_id": "CLM-0081",
+      "employee_id": "E002",
+      "vendor": "Typeform",
+      "product": "Typeform Business",
+      "amount_myr": 200.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-14T10:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E002"
+      ]
+    },
+    {
+      "claim_id": "CLM-0082",
+      "employee_id": "E004",
+      "vendor": "Loom Inc.",
+      "product": "Loom Business",
+      "amount_myr": 120.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-16T11:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E004"
+      ]
+    },
+    {
+      "claim_id": "CLM-0083",
+      "employee_id": "E005",
+      "vendor": "Linear",
+      "product": "Linear Standard",
+      "amount_myr": 180.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-18T14:00:00+00:00",
+      "notification_sent_to": [
+        "employee:E005"
+      ]
+    },
+    {
+      "claim_id": "CLM-0084",
+      "employee_id": "E006",
+      "vendor": "GitHub Inc.",
+      "product": "GitHub Copilot Individual",
+      "amount_myr": 105.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-20T09:30:00+00:00",
+      "notification_sent_to": [
+        "employee:E006"
+      ]
+    },
+    {
       "claim_id": "CLM-TEST",
       "employee_id": "E001",
       "vendor": "Figma Inc.",
@@ -13,28 +1030,903 @@
       ]
     },
     {
-      "claim_id": "CLM-F62E96C6",
-      "employee_id": "E002",
-      "vendor": "GitHub",
-      "product": "Copilot Business",
-      "amount_myr": 95.0,
-      "decision": "auto_reject",
-      "recorded_at": "2026-04-24T17:53:53.118476+00:00",
+      "claim_id": "CLM-TEST-CLEAN",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic PBC",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-25T13:30:40.861210+00:00",
       "notification_sent_to": [
-        "employee:E002"
+        "employee:EMP-1001",
+        "role:finance_ops"
       ]
     },
     {
-      "claim_id": "CLM-7661C734",
-      "employee_id": "EMP-1021",
+      "claim_id": "CLM-TEST-DUPLICATE",
+      "employee_id": "E003",
       "vendor": "Notion Labs Inc.",
       "product": "Notion Plus",
+      "amount_myr": 250.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-25T13:30:40.867131+00:00",
+      "notification_sent_to": [
+        "employee:E003",
+        "role:finance_ops"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-SEMANTIC_DUP",
+      "employee_id": "EMP-1003",
+      "vendor": "OpenAI",
+      "product": "ChatGPT Plus",
+      "amount_myr": 96.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-25T13:30:40.882623+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1003",
+        "role:finance_ops"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-HIGH_VALUE",
+      "employee_id": "EMP-1004",
+      "vendor": "Datadog Inc.",
+      "product": "Datadog Pro",
+      "amount_myr": 7800.0,
+      "decision": "escalate_finance",
+      "recorded_at": "2026-04-25T13:30:40.894417+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1004",
+        "role:finance_controller"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-UBER_SPIKE",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Grab Business Ride",
+      "amount_myr": 23.0,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-25T13:30:40.906448+00:00",
+      "notification_sent_to": [
+        "employee:E007",
+        "role:finance_ops"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-CLEAN",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic PBC",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:31:20.971625+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1001"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-DUPLICATE",
+      "employee_id": "E003",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Plus",
+      "amount_myr": 250.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:31:20.976537+00:00",
+      "notification_sent_to": [
+        "employee:E003"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-SEMANTIC_DUP",
+      "employee_id": "EMP-1003",
+      "vendor": "OpenAI",
+      "product": "ChatGPT Plus",
+      "amount_myr": 96.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:31:20.994152+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1003"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-HIGH_VALUE",
+      "employee_id": "EMP-1004",
+      "vendor": "Datadog Inc.",
+      "product": "Datadog Pro",
+      "amount_myr": 7800.0,
+      "decision": "escalate_finance",
+      "recorded_at": "2026-04-25T13:31:21.010287+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1004",
+        "role:finance_controller"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-UBER_SPIKE",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Grab Business Ride",
+      "amount_myr": 23.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:31:21.023388+00:00",
+      "notification_sent_to": [
+        "employee:E007"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-CLEAN",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic PBC",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:31:42.436753+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1001"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-DUPLICATE",
+      "employee_id": "E003",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Plus",
+      "amount_myr": 250.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:31:42.452754+00:00",
+      "notification_sent_to": [
+        "employee:E003"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-SEMANTIC_DUP",
+      "employee_id": "EMP-1003",
+      "vendor": "OpenAI",
+      "product": "ChatGPT Plus",
+      "amount_myr": 96.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:31:42.468370+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1003"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-HIGH_VALUE",
+      "employee_id": "EMP-1004",
+      "vendor": "Datadog Inc.",
+      "product": "Datadog Pro",
+      "amount_myr": 7800.0,
+      "decision": "escalate_finance",
+      "recorded_at": "2026-04-25T13:31:42.483801+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1004",
+        "role:finance_controller"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-UBER_SPIKE",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Grab Business Ride",
+      "amount_myr": 23.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:31:42.502439+00:00",
+      "notification_sent_to": [
+        "employee:E007"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-CLEAN",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic PBC",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:32:30.927056+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1001"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-DUPLICATE",
+      "employee_id": "E003",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Plus",
+      "amount_myr": 250.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:32:30.942508+00:00",
+      "notification_sent_to": [
+        "employee:E003"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-SEMANTIC_DUP",
+      "employee_id": "EMP-1003",
+      "vendor": "OpenAI",
+      "product": "ChatGPT Plus",
+      "amount_myr": 96.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:32:30.957273+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1003"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-HIGH_VALUE",
+      "employee_id": "EMP-1004",
+      "vendor": "Datadog Inc.",
+      "product": "Datadog Pro",
+      "amount_myr": 7800.0,
+      "decision": "escalate_finance",
+      "recorded_at": "2026-04-25T13:32:30.972225+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1004",
+        "role:finance_controller"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-UBER_SPIKE",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Grab Business Ride",
+      "amount_myr": 23.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:32:30.986116+00:00",
+      "notification_sent_to": [
+        "employee:E007"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-CLEAN",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic PBC",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-25T13:33:47.930634+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1001",
+        "role:finance_ops"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-DUPLICATE",
+      "employee_id": "E003",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Plus",
+      "amount_myr": 250.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:33:47.945900+00:00",
+      "notification_sent_to": [
+        "employee:E003"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-SEMANTIC_DUP",
+      "employee_id": "EMP-1003",
+      "vendor": "OpenAI",
+      "product": "ChatGPT Plus",
+      "amount_myr": 96.0,
+      "decision": "escalate_manager",
+      "recorded_at": "2026-04-25T13:33:47.962498+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1003",
+        "role:direct_manager"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-HIGH_VALUE",
+      "employee_id": "EMP-1004",
+      "vendor": "Datadog Inc.",
+      "product": "Datadog Pro",
+      "amount_myr": 7800.0,
+      "decision": "escalate_finance",
+      "recorded_at": "2026-04-25T13:33:47.975536+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1004",
+        "role:finance_controller"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-UBER_SPIKE",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Grab Business Ride",
+      "amount_myr": 23.0,
+      "decision": "escalate_manager",
+      "recorded_at": "2026-04-25T13:33:47.987368+00:00",
+      "notification_sent_to": [
+        "employee:E007",
+        "role:direct_manager"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-CLEAN",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:42:55.263632+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1001"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-DUPLICATE",
+      "employee_id": "E003",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Plus",
+      "amount_myr": 250.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:43:05.952142+00:00",
+      "notification_sent_to": [
+        "employee:E003"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-SEMANTIC_DUP",
+      "employee_id": "EMP-1003",
+      "vendor": "OpenAI",
+      "product": "ChatGPT Plus",
+      "amount_myr": 96.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:43:17.221773+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1003"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-HIGH_VALUE",
+      "employee_id": "EMP-1004",
+      "vendor": "Datadog Inc.",
+      "product": "Datadog Pro annual",
+      "amount_myr": 7800.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:43:26.374273+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1004"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-UBER_SPIKE",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Business Ride",
+      "amount_myr": 23.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:43:32.487085+00:00",
+      "notification_sent_to": [
+        "employee:E007"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-CLEAN",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:45:27.232132+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1001"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-DUPLICATE",
+      "employee_id": "E003",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Plus",
+      "amount_myr": 250.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:45:38.886995+00:00",
+      "notification_sent_to": [
+        "employee:E003"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-SEMANTIC_DUP",
+      "employee_id": "EMP-1003",
+      "vendor": "OpenAI",
+      "product": "ChatGPT Plus",
       "amount_myr": 0.0,
       "decision": "auto_reject",
-      "recorded_at": "2026-04-24T17:56:41.510277+00:00",
+      "recorded_at": "2026-04-25T13:45:48.194884+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1003"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-HIGH_VALUE",
+      "employee_id": "EMP-1004",
+      "vendor": "Datadog Inc.",
+      "product": "Pro Annual",
+      "amount_myr": 7800.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:45:56.824539+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1004"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-UBER_SPIKE",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Business Ride",
+      "amount_myr": 23.0,
+      "decision": "request_info",
+      "recorded_at": "2026-04-25T13:46:05.091690+00:00",
+      "notification_sent_to": [
+        "employee:E007"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-CLEAN",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:47:03.362921+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1001"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-DUPLICATE",
+      "employee_id": "E003",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Plus",
+      "amount_myr": 250.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:47:13.788866+00:00",
+      "notification_sent_to": [
+        "employee:E003"
+      ]
+    },
+    {
+      "claim_id": "CLM-A9B90F77",
+      "employee_id": "EMP-1021",
+      "vendor": "Anthropic PBC",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:47:14.654304+00:00",
       "notification_sent_to": [
         "employee:EMP-1021"
       ]
+    },
+    {
+      "claim_id": "CLM-TEST-SEMANTIC_DUP",
+      "employee_id": "EMP-1003",
+      "vendor": "OpenAI",
+      "product": "ChatGPT Plus",
+      "amount_myr": 96.0,
+      "decision": "request_info",
+      "recorded_at": "2026-04-25T13:47:24.349873+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1003"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-HIGH_VALUE",
+      "employee_id": "EMP-1004",
+      "vendor": "Datadog Inc.",
+      "product": "Datadog Pro annual",
+      "amount_myr": 7800.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:47:34.199124+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1004"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-UBER_SPIKE",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Business Ride",
+      "amount_myr": 23.0,
+      "decision": "request_info",
+      "recorded_at": "2026-04-25T13:47:41.416261+00:00",
+      "notification_sent_to": [
+        "employee:E007"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-CLEAN",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:48:14.995327+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1001"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-DUPLICATE",
+      "employee_id": "E003",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Plus",
+      "amount_myr": 250.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:48:24.517345+00:00",
+      "notification_sent_to": [
+        "employee:E003"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-SEMANTIC_DUP",
+      "employee_id": "EMP-1003",
+      "vendor": "OpenAI",
+      "product": "ChatGPT Plus",
+      "amount_myr": 96.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:48:34.716473+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1003"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-HIGH_VALUE",
+      "employee_id": "EMP-1004",
+      "vendor": "Datadog",
+      "product": "Pro annual",
+      "amount_myr": 7800.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:48:43.734205+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1004"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-UBER_SPIKE",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Business Ride",
+      "amount_myr": 23.0,
+      "decision": "escalate_manager",
+      "recorded_at": "2026-04-25T13:48:52.587988+00:00",
+      "notification_sent_to": [
+        "employee:E007",
+        "role:direct_manager"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-CLEAN",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-25T13:49:26.183025+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1001",
+        "role:finance_ops"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-DUPLICATE",
+      "employee_id": "E003",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Plus",
+      "amount_myr": 250.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:49:35.555357+00:00",
+      "notification_sent_to": [
+        "employee:E003"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-SEMANTIC_DUP",
+      "employee_id": "EMP-1003",
+      "vendor": "OpenAI",
+      "product": "ChatGPT Plus",
+      "amount_myr": 96.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:49:45.818060+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1003"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-HIGH_VALUE",
+      "employee_id": "EMP-1004",
+      "vendor": "Datadog Inc.",
+      "product": "Datadog Pro annual",
+      "amount_myr": 7800.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:49:54.372607+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1004"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-UBER_SPIKE",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Business Ride",
+      "amount_myr": 23.0,
+      "decision": "escalate_manager",
+      "recorded_at": "2026-04-25T13:50:07.404114+00:00",
+      "notification_sent_to": [
+        "employee:E007",
+        "role:direct_manager"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-CLEAN",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-25T13:50:29.990101+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1001",
+        "role:finance_ops"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-DUPLICATE",
+      "employee_id": "E003",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Plus",
+      "amount_myr": 250.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:50:38.832278+00:00",
+      "notification_sent_to": [
+        "employee:E003"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-SEMANTIC_DUP",
+      "employee_id": "EMP-1003",
+      "vendor": "OpenAI",
+      "product": "ChatGPT Plus",
+      "amount_myr": 0.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:50:50.367812+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1003"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-HIGH_VALUE",
+      "employee_id": "EMP-1004",
+      "vendor": "Datadog Inc.",
+      "product": "Datadog Pro",
+      "amount_myr": 7800.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:50:59.262107+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1004"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-UBER_SPIKE",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Business Ride",
+      "amount_myr": 23.0,
+      "decision": "request_info",
+      "recorded_at": "2026-04-25T13:51:10.770305+00:00",
+      "notification_sent_to": [
+        "employee:E007"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-CLEAN",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-25T13:51:39.088113+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1001",
+        "role:finance_ops"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-DUPLICATE",
+      "employee_id": "E003",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Plus",
+      "amount_myr": 250.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:51:47.882913+00:00",
+      "notification_sent_to": [
+        "employee:E003"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-SEMANTIC_DUP",
+      "employee_id": "EMP-1003",
+      "vendor": "OpenAI",
+      "product": "ChatGPT Plus",
+      "amount_myr": 96.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:51:57.026032+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1003"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-HIGH_VALUE",
+      "employee_id": "EMP-1004",
+      "vendor": "Datadog Inc.",
+      "product": "Datadog Pro annual",
+      "amount_myr": 7800.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T13:52:05.979520+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1004"
+      ]
+    },
+    {
+      "claim_id": "CLM-TEST-UBER_SPIKE",
+      "employee_id": "E007",
+      "vendor": "Grab",
+      "product": "Business Ride",
+      "amount_myr": 23.0,
+      "decision": "request_info",
+      "recorded_at": "2026-04-25T13:52:19.182318+00:00",
+      "notification_sent_to": [
+        "employee:E007"
+      ]
+    },
+    {
+      "claim_id": "CLM-53177C80",
+      "employee_id": "EMP-1021",
+      "vendor": "Anthropic PBC",
+      "product": "Claude Pro Monthly",
+      "amount_myr": 94.5,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T14:00:06.526656+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1021"
+      ]
+    },
+    {
+      "claim_id": "CLM-2EF9895C",
+      "employee_id": "EMP-1021",
+      "vendor": "Anthropic",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T14:04:38.707141+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1021"
+      ]
+    },
+    {
+      "claim_id": "CLM-EC03C2BC",
+      "employee_id": "EMP-1021",
+      "vendor": "Anthropic PBC",
+      "product": "Claude Pro Monthly",
+      "amount_myr": 94.5,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T14:08:02.211077+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1021"
+      ]
+    },
+    {
+      "claim_id": "CLM-463BD648",
+      "employee_id": "EMP-1021",
+      "vendor": "Datadog",
+      "product": "Pro Annual",
+      "amount_myr": 7800.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T14:09:02.117401+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1021"
+      ]
+    },
+    {
+      "claim_id": "CLM-524B16B7",
+      "employee_id": "EMP-1021",
+      "vendor": "(unknown)",
+      "product": "(unknown)",
+      "amount_myr": 200.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T14:12:01.341568+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1021"
+      ]
+    },
+    {
+      "claim_id": "CLM-BB670514",
+      "employee_id": "EMP-1021",
+      "vendor": "Greptile PBC",
+      "product": "Greptile PR checker subscription",
+      "amount_myr": 94.5,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-25T14:17:32.687589+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1021",
+        "role:finance_ops"
+      ]
+    },
+    {
+      "claim_id": "CLM-F4BA2D33",
+      "employee_id": "EMP-1021",
+      "vendor": "Anthropic PBC",
+      "product": "Claude Pro Monthly",
+      "amount_myr": 94.5,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T14:41:22.591287+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1021"
+      ]
+    },
+    {
+      "claim_id": "CLM-2C77A91B",
+      "employee_id": "EMP-1021",
+      "vendor": "Figma",
+      "product": "Figma Pro subscription",
+      "amount_myr": 940.5,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T14:44:04.652918+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1021"
+      ]
+    },
+    {
+      "claim_id": "CLM-C2B34F76",
+      "employee_id": "EMP-1021",
+      "vendor": "(unknown)",
+      "product": "(unknown)",
+      "amount_myr": 200.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T14:57:35.541431+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1021"
+      ]
+    },
+    {
+      "claim_id": "CLM-A1D17AC6",
+      "employee_id": "EMP-1021",
+      "vendor": "Greptile PBC",
+      "product": "Greptile PR checker subscription",
+      "amount_myr": 194.5,
+      "decision": "escalate_manager",
+      "recorded_at": "2026-04-25T15:19:34.383783+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1021",
+        "role:direct_manager"
+      ],
+      "submission_hash": "d572996c148e1aa46eb9ae2b03a8e2e263f572baeadb037660793223a2e9d6cb"
+    },
+    {
+      "claim_id": "CLM-BBEEBDB1",
+      "employee_id": "EMP-1021",
+      "vendor": "Datadog Inc.",
+      "product": "Pro Annual",
+      "amount_myr": 7800.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T15:21:34.046827+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1021"
+      ],
+      "submission_hash": "5f5dd16ef1c79c95fe1b01eedd142b3daacb78a4a5f66598c7a13049d33e74f5"
+    },
+    {
+      "claim_id": "CLM-7A85FFF4",
+      "employee_id": "EMP-1021",
+      "vendor": "aBU Inc.",
+      "product": "Pro Annual",
+      "amount_myr": 7800.0,
+      "decision": "escalate_manager",
+      "recorded_at": "2026-04-25T15:23:10.118447+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1021",
+        "role:direct_manager"
+      ],
+      "submission_hash": "9d09e3c965f3255778af2868f9f9aa68f6b968aa7f8728396eb3d68b04f4f583"
     }
   ]
 }

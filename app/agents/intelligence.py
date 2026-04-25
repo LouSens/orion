@@ -1,74 +1,122 @@
-"""Intelligence Agent — semantic duplicate detection + alternatives.
+"""Intelligence Agent — semantic duplicate detection + fraud investigation.
 
 This is the agent that justifies the "intelligent workflow, not an
-automation script" framing. It does three things that are hard without an
-LLM:
+automation script" framing. It runs a **real LangChain tool-calling loop**:
+the LLM decides which of the four investigative tools to call, in what
+order, and whether to call them multiple times based on the accumulating
+evidence. The loop is capped at `settings.intelligence_max_iterations`
+(default 5) to prevent runaway costs.
 
-1. **Duplicate detection via semantic similarity.** "ChatGPT Plus",
-   "OpenAI GPT-4 subscription", and "ChatGPT Team" look different as
-   strings but map to the same org license. We fuzzy-prefilter then hand
-   the final call to the LLM with full organisational context.
-2. **Alternative suggestion.** If the org already has seats available on
-   a comparable license, recommend that instead.
-3. **Cross-reference against the approved catalog.** Flag self-purchases
-   of tools that should go through a team-managed account.
+The four tools available to the LLM:
+    search_ledger_by_amount      – finds past claims near the same MYR value
+    search_ledger_by_merchant    – finds past claims for the same vendor
+    search_employee_history      – checks recent claim volume for the employee
+    lookup_subscription_catalog  – flags known SaaS that should go through procurement
 
-The output is a structured `IntelligenceReport` whose `recommendation`
-field directly influences downstream routing.
+At the end of the loop (either LLM stops or cap reached), the accumulated
+tool results and conversation are fed back to the LLM for a final
+IntelligenceReport in structured JSON.
+
+Output: IntelligenceReport whose `recommendation` field directly
+influences Supervisor routing.
 """
 from __future__ import annotations
+
+import json
 
 from langsmith import traceable
 
 from ..config import settings
-from ..llm import chat_structured
+from ..llm import LLMError, chat, chat_structured
 from ..schemas import IntelligenceReport
 from ..state import WorkflowState
 from ..tools import SubscriptionCatalog
+from ..tools.ledger_search import INTELLIGENCE_TOOLS
 
 _catalog = SubscriptionCatalog()
 
-SYSTEM = """You are the Intelligence Agent. You reason about whether a
-reimbursement request overlaps with software the organisation already
-licenses, and whether a better alternative exists.
+# ---------------------------------------------------------------------------
+# Tool registry — name → callable(args_dict) → str
+# ---------------------------------------------------------------------------
 
-You have access to:
-1. The employee's extracted claim.
-2. The list of all active organisation-wide SaaS licences (with seat
-   availability, owner team, and aliases).
-3. A curated catalog of approved vendors.
-4. A pre-filtered shortlist of licences that fuzzy-match the request.
+_TOOL_MAP: dict[str, object] = {t.name: t for t in INTELLIGENCE_TOOLS}
 
-Your judgement criteria:
-- "Likely duplicate" means the requested product is substantively the
-  same software as an existing org licence — same vendor family, same
-  core capability — even if the marketing names differ (e.g. "Copilot"
-  vs "GitHub Copilot Business" under "GitHub Enterprise"). Consider the
-  employee's team when deciding (a designer asking for Figma when the
-  Design team owns Figma Org is almost always a duplicate).
-- If a duplicate exists AND the existing licence has available seats,
-  recommend "block_duplicate" and name the licence + owner team.
-- If a duplicate exists but NO seats are available, recommend
-  "suggest_alternative" — suggest either a cheaper tier or requesting a
-  seat expansion rather than a new subscription.
-- If the product is reasonable and no duplicate, recommend "proceed".
-- `similarity_score` is your confidence that two products are truly the
-  same underlying software (0..1). Use the alias list.
 
-Be strict but fair. A duplicate finding blocks the claim, so only call
-it when you genuinely believe the org already pays for this capability.
+def _invoke_tool(name: str, args: dict) -> str:
+    """Look up and call a tool by name; return its string output."""
+    tool = _TOOL_MAP.get(name)
+    if tool is None:
+        return json.dumps({"error": f"Unknown tool: {name}"})
+    try:
+        return tool.invoke(args)
+    except Exception as exc:  # noqa: BLE001
+        return json.dumps({"error": str(exc)})
+
+
+# ---------------------------------------------------------------------------
+# Tool schema block for injection into the system prompt
+# ---------------------------------------------------------------------------
+
+def _tools_schema_block() -> str:
+    lines = ["You have access to the following tools (call them by name with JSON args):\n"]
+    for t in INTELLIGENCE_TOOLS:
+        lines.append(f"  {t.name}: {t.description}")
+    lines.append(
+        "\nTo call a tool, output ONLY a JSON object in this exact format:\n"
+        '  {"tool_call": {"name": "<tool_name>", "args": {<args>}}}\n'
+        "When you are done investigating and ready to produce the final report, output:\n"
+        '  {"done": true}'
+    )
+    return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------------
+# System prompts
+# ---------------------------------------------------------------------------
+
+SYSTEM_INVESTIGATOR = f"""You are the Intelligence Agent in an expense-reimbursement workflow.
+Your mission: investigate whether a subscription reimbursement request is a
+duplicate of an existing org license, and whether better alternatives exist.
+
+{_tools_schema_block()}
+
+Judgement criteria:
+- "Likely duplicate" means the requested product is substantively the same
+  software as an existing org licence — same vendor family, same core
+  capability — even if the marketing names differ.
+- If a duplicate exists AND the existing licence has available seats →
+  recommend "block_duplicate".
+- If a duplicate exists but NO seats are available → recommend
+  "suggest_alternative".
+- If the product is reasonable and no duplicate → recommend "proceed".
+
+Think step-by-step. Call tools to gather evidence. Stop when you have
+enough — or when you have exhausted what the tools can tell you.
 """
 
+SYSTEM_REPORTER = """You are the Intelligence Agent. Based on the investigation
+conversation provided, produce the final structured IntelligenceReport.
+Do NOT call any more tools — synthesise what you found into the report.
+
+IMPORTANT: The tools have already pre-calculated all statistical signals
+(anomaly_signals, duplicate_signals, vendor_signals). Your job is to NARRATE
+these signals in plain language, not recalculate them. Use the signal fields
+directly in your reasoning and rationale."""
+
+
+# ---------------------------------------------------------------------------
+# Main node
+# ---------------------------------------------------------------------------
 
 @traceable(run_type="chain", name="agent.intelligence")
 def intelligence_node(state: WorkflowState) -> WorkflowState:
     claim = state["intake"]
     submission = state["submission"]
+    max_iter = settings.intelligence_max_iterations
 
-    fuzzy_query = " ".join(filter(None, [claim.product, claim.vendor]))
-    candidates = _catalog.fuzzy_candidates(fuzzy_query) if fuzzy_query else []
-
-    user_msg = f"""Employee team: {submission.employee_team}
+    # Seed the conversation with the claim context.
+    initial_user_msg = f"""Employee: {submission.employee_name} ({submission.employee_id}), team: {submission.employee_team}
+Employee ID for tool calls: {submission.employee_id}
 
 Extracted claim:
 - vendor: {claim.vendor}
@@ -77,22 +125,82 @@ Extracted claim:
 - amount_myr: {claim.amount_myr}
 - billing_period: {claim.billing_period}
 - justification: {claim.business_justification}
+- missing_fields: {claim.missing_fields}
 
 {_catalog.as_prompt_block()}
 
-Fuzzy-matched shortlist (pre-filter only — make your own decision):
-{[c['id'] + ': ' + c['product'] for c in candidates] or 'none'}
+IMPORTANT: When calling search_ledger_by_merchant or search_ledger_by_amount,
+always pass employee_id="{submission.employee_id}" so vendor_signals and
+duplicate_signals are computed correctly for this employee.
 
-Produce the intelligence report."""
+Begin your investigation. Call tools to gather evidence, then signal done."""
+
+    messages: list[dict[str, str]] = [
+        {"role": "system", "content": SYSTEM_INVESTIGATOR},
+        {"role": "user", "content": initial_user_msg},
+    ]
+
+    degraded = False
+    iterations = 0
+
+    # -----------------------------------------------------------------------
+    # Tool-calling loop
+    # -----------------------------------------------------------------------
+    while iterations < max_iter:
+        raw = chat(
+            messages,
+            temperature=settings.cfg_intelligence.temperature,
+            max_tokens=settings.cfg_intelligence.max_tokens,
+            response_format_json=True,
+        )
+        messages.append({"role": "assistant", "content": raw})
+        iterations += 1
+
+        # Parse the LLM's intent.
+        try:
+            intent = json.loads(raw)
+        except json.JSONDecodeError:
+            # LLM produced free text — treat as "done".
+            break
+
+        if intent.get("done"):
+            break
+
+        tool_call = intent.get("tool_call")
+        if not tool_call or "name" not in tool_call:
+            # No recognisable structure — stop.
+            break
+
+        tool_name = tool_call["name"]
+        tool_args = tool_call.get("args", {})
+        result = _invoke_tool(tool_name, tool_args)
+
+        messages.append({
+            "role": "user",
+            "content": f"Tool `{tool_name}` result:\n{result}\n\nContinue investigating or signal done.",
+        })
+    else:
+        # Loop exhausted without a "done" signal.
+        degraded = True
+
+    # -----------------------------------------------------------------------
+    # Structured report extraction
+    # -----------------------------------------------------------------------
+    messages.append({
+        "role": "user",
+        "content": (
+            "The investigation loop has ended"
+            + (" (iteration cap reached — mark this as a degraded report)" if degraded else "")
+            + ". Now produce the final IntelligenceReport JSON."
+        ),
+    })
+    # Swap system prompt to reporter mode for the final call.
+    report_messages = [{"role": "system", "content": SYSTEM_REPORTER}] + messages[1:]
 
     report = chat_structured(
-        [
-            {"role": "system", "content": SYSTEM},
-            {"role": "user", "content": user_msg},
-        ],
+        report_messages,
         IntelligenceReport,
         cfg=settings.cfg_intelligence,
     )
 
-    trace = state.get("trace", []) + ["intelligence"]
-    return {**state, "intelligence": report, "trace": trace}
+    return {"intelligence": report, "trace": [f"intelligence(iters={iterations})"]}

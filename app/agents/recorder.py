@@ -44,8 +44,8 @@ def recorder_node(state: WorkflowState) -> WorkflowState:
         decision=approval.decision,
         recorded_at=datetime.now(timezone.utc).isoformat(),
         notification_sent_to=_notify_list(approval.decision, submission.employee_id),
+        submission_hash=state.get("submission_hash"),  # P1.6 idempotency fingerprint
     )
     _ledger.append(record.model_dump(mode="json"))
 
-    trace = state.get("trace", []) + ["recorder"]
-    return {**state, "record": record, "terminal": True, "trace": trace}
+    return {"record": record, "terminal": True, "trace": ["recorder"]}

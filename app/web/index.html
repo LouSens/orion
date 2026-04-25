@@ -263,12 +263,11 @@ function render(d) {
     ${sec('1. Intake — unstructured → structured', pre(d.intake))}
     ${sec('2. Intelligence — dup detection & alternatives', pre(d.intelligence),
          recBadge(d.intelligence && d.intelligence.recommendation))}
-    ${sec('3. Policy compliance', pre(d.policy),
-         d.policy ? `<span class="badge ${d.policy.compliant ? 'ok' : 'bad'}">${d.policy.compliant ? 'compliant' : 'non-compliant'}</span>` : '')}
-    ${sec('4. Validation', pre(d.validation))}
-    ${sec('5. Approval decision', pre(d.approval),
+    ${sec('3. Policy check (deterministic)', pre(d.policy),
+         d.policy ? `<span class="badge ${d.policy.compliant ? 'ok' : 'bad'}">${d.policy.fast_reject ? 'fast reject' : d.policy.compliant ? 'compliant' : 'violations'}</span>` : '')}
+    ${sec('4. Critic decision', pre(d.approval),
          decisionBadge(d.approval && d.approval.decision))}
-    ${sec('6. Ledger record', pre(d.record))}
+    ${sec('5. Ledger record', pre(d.record))}
   `;
 }
 

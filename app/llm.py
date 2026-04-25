@@ -39,6 +39,9 @@ class LLMError(RuntimeError):
 _client: OpenAI | None = None
 # Process-wide flag that flips off if the server refuses json_object mode.
 _json_mode_enabled: bool = True
+# Process-wide flag: some models (o-series, newer deployments) require
+# max_completion_tokens instead of max_tokens. Flips on first rejection.
+_use_max_completion_tokens: bool = False
 
 
 def _get_client() -> OpenAI:
@@ -68,6 +71,14 @@ def _json_mode_rejected(exc: Exception) -> bool:
     return False
 
 
+def _max_tokens_rejected(exc: Exception) -> bool:
+    """Return True if the server wants max_completion_tokens instead of max_tokens."""
+    if isinstance(exc, APIStatusError) and exc.status_code == 400:
+        msg = str(exc).lower()
+        return "max_tokens" in msg and "max_completion_tokens" in msg
+    return False
+
+
 @traceable(run_type="llm", name="ilmu.chat")
 def chat(
     messages: list[dict[str, str]],
@@ -86,11 +97,12 @@ def chat(
     )
 
     def _call(with_json: bool) -> str:
+        tokens_key = "max_completion_tokens" if _use_max_completion_tokens else "max_tokens"
         kwargs: dict[str, Any] = {
             "model": settings.ilmu_model,
             "messages": messages,
             "temperature": temperature,
-            "max_tokens": max_tokens,
+            tokens_key: max_tokens,
         }
         if with_json:
             kwargs["response_format"] = {"type": "json_object"}
@@ -111,6 +123,10 @@ def chat(
                 _json_mode_enabled = False
                 use_json = False
                 continue  # retry immediately without json_object
+            if _max_tokens_rejected(e):
+                global _use_max_completion_tokens
+                _use_max_completion_tokens = True
+                continue  # retry immediately with max_completion_tokens
             if attempt < settings.ilmu_max_retries and _is_transient(e):
                 time.sleep(0.5 * (2 ** attempt))
                 continue

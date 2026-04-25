@@ -1,113 +1,682 @@
 {
-    "active_licenses": [
-        {
-            "id": "ORG-SUB-001",
-            "vendor": "Notion Labs Inc.",
-            "product": "Notion Team Plan",
-            "category": "productivity",
-            "seats_total": 50,
-            "seats_used": 41,
-            "seats_available": 9,
-            "owner_team": "Operations",
-            "renewal_date": "2026-11-30",
-            "aliases": [
-                "Notion",
-                "Notion.so",
-                "Notion Workspace"
-            ]
-        },
-        {
-            "id": "ORG-SUB-002",
-            "vendor": "Figma Inc.",
-            "product": "Figma Organization",
-            "category": "design",
-            "seats_total": 20,
-            "seats_used": 18,
-            "seats_available": 2,
-            "owner_team": "Design",
-            "renewal_date": "2026-08-15",
-            "aliases": [
-                "Figma",
-                "FigJam"
-            ]
-        },
-        {
-            "id": "ORG-SUB-003",
-            "vendor": "GitHub Inc.",
-            "product": "GitHub Enterprise",
-            "category": "engineering",
-            "seats_total": 40,
-            "seats_used": 32,
-            "seats_available": 8,
-            "owner_team": "Engineering",
-            "renewal_date": "2027-01-10",
-            "aliases": [
-                "GitHub",
-                "Copilot",
-                "GitHub Copilot Business"
-            ]
-        },
-        {
-            "id": "ORG-SUB-004",
-            "vendor": "Slack Technologies",
-            "product": "Slack Business+",
-            "category": "communication",
-            "seats_total": 80,
-            "seats_used": 72,
-            "seats_available": 8,
-            "owner_team": "IT",
-            "renewal_date": "2026-06-01",
-            "aliases": [
-                "Slack"
-            ]
-        },
-        {
-            "id": "ORG-SUB-005",
-            "vendor": "OpenAI",
-            "product": "ChatGPT Team",
-            "category": "ai_tools",
-            "seats_total": 25,
-            "seats_used": 25,
-            "seats_available": 0,
-            "owner_team": "AI Platform",
-            "renewal_date": "2026-07-20",
-            "aliases": [
-                "ChatGPT",
-                "OpenAI ChatGPT",
-                "GPT-4 subscription"
-            ]
-        }
-    ],
-    "approved_catalog": [
-        {
-            "product": "Notion Team Plan",
-            "category": "productivity",
-            "note": "Preferred productivity/wiki tool — org license available."
-        },
-        {
-            "product": "Linear Standard",
-            "category": "productivity",
-            "note": "Approved issue tracker."
-        },
-        {
-            "product": "Figma Organization",
-            "category": "design",
-            "note": "Org license available."
-        },
-        {
-            "product": "GitHub Copilot Business",
-            "category": "ai_tools",
-            "note": "Bundled under GitHub Enterprise — request seat assignment, do not self-purchase."
-        },
-        {
-            "product": "Claude Pro",
-            "category": "ai_tools",
-            "note": "Approved for individual claims up to MYR 120/month."
-        },
-        {
-            "product": "Anthropic API credits",
-            "category": "ai_tools",
-            "note": "Use team-managed key; self-purchase not reimbursable."
-        }
-    ]
+  "active_licenses": [
+    {
+      "id": "ORG-SUB-001",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Team Plan",
+      "category": "productivity",
+      "seats_total": 50,
+      "seats_used": 41,
+      "seats_available": 9,
+      "owner_team": "Operations",
+      "renewal_date": "2026-11-30",
+      "aliases": [
+        "Notion",
+        "Notion.so",
+        "Notion Workspace",
+        "Notion Plus"
+      ]
+    },
+    {
+      "id": "ORG-SUB-002",
+      "vendor": "Figma Inc.",
+      "product": "Figma Organization",
+      "category": "design",
+      "seats_total": 20,
+      "seats_used": 18,
+      "seats_available": 2,
+      "owner_team": "Design",
+      "renewal_date": "2026-08-15",
+      "aliases": [
+        "Figma",
+        "FigJam",
+        "Figma Pro"
+      ]
+    },
+    {
+      "id": "ORG-SUB-003",
+      "vendor": "GitHub Inc.",
+      "product": "GitHub Enterprise",
+      "category": "engineering",
+      "seats_total": 40,
+      "seats_used": 32,
+      "seats_available": 8,
+      "owner_team": "Engineering",
+      "renewal_date": "2027-01-10",
+      "aliases": [
+        "GitHub",
+        "Copilot",
+        "GitHub Copilot Business",
+        "GitHub Actions"
+      ]
+    },
+    {
+      "id": "ORG-SUB-004",
+      "vendor": "Slack Technologies",
+      "product": "Slack Business+",
+      "category": "communication",
+      "seats_total": 80,
+      "seats_used": 72,
+      "seats_available": 8,
+      "owner_team": "IT",
+      "renewal_date": "2026-06-01",
+      "aliases": [
+        "Slack"
+      ]
+    },
+    {
+      "id": "ORG-SUB-005",
+      "vendor": "OpenAI",
+      "product": "ChatGPT Team",
+      "category": "ai_tools",
+      "seats_total": 25,
+      "seats_used": 25,
+      "seats_available": 0,
+      "owner_team": "AI Platform",
+      "renewal_date": "2026-07-20",
+      "aliases": [
+        "ChatGPT",
+        "OpenAI ChatGPT",
+        "GPT-4 subscription",
+        "ChatGPT Plus"
+      ]
+    },
+    {
+      "id": "ORG-SUB-006",
+      "vendor": "Atlassian",
+      "product": "Jira Software Cloud",
+      "category": "engineering",
+      "seats_total": 60,
+      "seats_used": 48,
+      "seats_available": 12,
+      "owner_team": "Engineering",
+      "renewal_date": "2026-09-01",
+      "aliases": [
+        "Jira",
+        "Atlassian Jira",
+        "Jira Cloud"
+      ]
+    },
+    {
+      "id": "ORG-SUB-007",
+      "vendor": "Atlassian",
+      "product": "Confluence Cloud",
+      "category": "productivity",
+      "seats_total": 60,
+      "seats_used": 44,
+      "seats_available": 16,
+      "owner_team": "Operations",
+      "renewal_date": "2026-09-01",
+      "aliases": [
+        "Confluence",
+        "Atlassian Confluence"
+      ]
+    },
+    {
+      "id": "ORG-SUB-008",
+      "vendor": "Zoom Video Communications",
+      "product": "Zoom Business",
+      "category": "communication",
+      "seats_total": 30,
+      "seats_used": 28,
+      "seats_available": 2,
+      "owner_team": "IT",
+      "renewal_date": "2026-12-15",
+      "aliases": [
+        "Zoom",
+        "Zoom Pro",
+        "Zoom Meetings"
+      ]
+    },
+    {
+      "id": "ORG-SUB-009",
+      "vendor": "Microsoft",
+      "product": "Microsoft 365 Business Standard",
+      "category": "productivity",
+      "seats_total": 120,
+      "seats_used": 98,
+      "seats_available": 22,
+      "owner_team": "IT",
+      "renewal_date": "2027-03-01",
+      "aliases": [
+        "Microsoft 365",
+        "Office 365",
+        "M365",
+        "Teams",
+        "SharePoint",
+        "OneDrive"
+      ]
+    },
+    {
+      "id": "ORG-SUB-010",
+      "vendor": "Google LLC",
+      "product": "Google Workspace Business Plus",
+      "category": "productivity",
+      "seats_total": 100,
+      "seats_used": 82,
+      "seats_available": 18,
+      "owner_team": "IT",
+      "renewal_date": "2027-01-15",
+      "aliases": [
+        "Google Workspace",
+        "G Suite",
+        "Gmail Business",
+        "Google Drive Business"
+      ]
+    },
+    {
+      "id": "ORG-SUB-011",
+      "vendor": "1Password",
+      "product": "1Password Teams",
+      "category": "security",
+      "seats_total": 80,
+      "seats_used": 62,
+      "seats_available": 18,
+      "owner_team": "Security",
+      "renewal_date": "2026-10-01",
+      "aliases": [
+        "1Password",
+        "1Pass"
+      ]
+    },
+    {
+      "id": "ORG-SUB-012",
+      "vendor": "Datadog Inc.",
+      "product": "Datadog Pro",
+      "category": "analytics",
+      "seats_total": 20,
+      "seats_used": 15,
+      "seats_available": 5,
+      "owner_team": "Platform Engineering",
+      "renewal_date": "2026-11-01",
+      "aliases": [
+        "Datadog",
+        "Datadog APM"
+      ]
+    },
+    {
+      "id": "ORG-SUB-013",
+      "vendor": "Loom Inc.",
+      "product": "Loom Business",
+      "category": "communication",
+      "seats_total": 40,
+      "seats_used": 31,
+      "seats_available": 9,
+      "owner_team": "Product",
+      "renewal_date": "2026-08-01",
+      "aliases": [
+        "Loom",
+        "Loom Pro"
+      ]
+    },
+    {
+      "id": "ORG-SUB-014",
+      "vendor": "Miro",
+      "product": "Miro Business",
+      "category": "design",
+      "seats_total": 25,
+      "seats_used": 18,
+      "seats_available": 7,
+      "owner_team": "Product",
+      "renewal_date": "2026-07-01",
+      "aliases": [
+        "Miro",
+        "RealtimeBoard"
+      ]
+    },
+    {
+      "id": "ORG-SUB-015",
+      "vendor": "Canva",
+      "product": "Canva for Teams",
+      "category": "design",
+      "seats_total": 15,
+      "seats_used": 12,
+      "seats_available": 3,
+      "owner_team": "Marketing",
+      "renewal_date": "2026-09-15",
+      "aliases": [
+        "Canva",
+        "Canva Pro"
+      ]
+    },
+    {
+      "id": "ORG-SUB-016",
+      "vendor": "Postman Inc.",
+      "product": "Postman Team Plan",
+      "category": "engineering",
+      "seats_total": 30,
+      "seats_used": 22,
+      "seats_available": 8,
+      "owner_team": "Engineering",
+      "renewal_date": "2027-02-01",
+      "aliases": [
+        "Postman",
+        "Postman API"
+      ]
+    },
+    {
+      "id": "ORG-SUB-017",
+      "vendor": "JetBrains",
+      "product": "JetBrains All Products Pack",
+      "category": "engineering",
+      "seats_total": 35,
+      "seats_used": 30,
+      "seats_available": 5,
+      "owner_team": "Engineering",
+      "renewal_date": "2026-12-01",
+      "aliases": [
+        "JetBrains",
+        "IntelliJ",
+        "PyCharm",
+        "WebStorm",
+        "GoLand",
+        "Rider"
+      ]
+    },
+    {
+      "id": "ORG-SUB-018",
+      "vendor": "Grammarly Inc.",
+      "product": "Grammarly Business",
+      "category": "productivity",
+      "seats_total": 50,
+      "seats_used": 35,
+      "seats_available": 15,
+      "owner_team": "Marketing",
+      "renewal_date": "2026-11-15",
+      "aliases": [
+        "Grammarly",
+        "Grammarly Pro"
+      ]
+    },
+    {
+      "id": "ORG-SUB-019",
+      "vendor": "Calendly",
+      "product": "Calendly Teams",
+      "category": "productivity",
+      "seats_total": 20,
+      "seats_used": 14,
+      "seats_available": 6,
+      "owner_team": "Sales",
+      "renewal_date": "2026-10-15",
+      "aliases": [
+        "Calendly",
+        "Calendly Pro"
+      ]
+    },
+    {
+      "id": "ORG-SUB-020",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion AI Add-on",
+      "category": "ai_tools",
+      "seats_total": 30,
+      "seats_used": 22,
+      "seats_available": 8,
+      "owner_team": "Operations",
+      "renewal_date": "2026-11-30",
+      "aliases": [
+        "Notion AI",
+        "Notion AI add-on"
+      ]
+    },
+    {
+      "id": "ORG-SUB-021",
+      "vendor": "Anthropic",
+      "product": "Claude Team",
+      "category": "ai_tools",
+      "seats_total": 20,
+      "seats_used": 20,
+      "seats_available": 0,
+      "owner_team": "AI Platform",
+      "renewal_date": "2026-08-01",
+      "aliases": [
+        "Claude",
+        "Anthropic Claude"
+      ]
+    },
+    {
+      "id": "ORG-SUB-022",
+      "vendor": "Hubspot Inc.",
+      "product": "HubSpot Sales Hub Professional",
+      "category": "analytics",
+      "seats_total": 15,
+      "seats_used": 12,
+      "seats_available": 3,
+      "owner_team": "Sales",
+      "renewal_date": "2026-09-01",
+      "aliases": [
+        "HubSpot",
+        "HubSpot CRM",
+        "Hubspot Sales"
+      ]
+    },
+    {
+      "id": "ORG-SUB-023",
+      "vendor": "Tableau Software",
+      "product": "Tableau Creator",
+      "category": "analytics",
+      "seats_total": 10,
+      "seats_used": 8,
+      "seats_available": 2,
+      "owner_team": "Data",
+      "renewal_date": "2026-12-01",
+      "aliases": [
+        "Tableau",
+        "Tableau Desktop"
+      ]
+    },
+    {
+      "id": "ORG-SUB-024",
+      "vendor": "Asana Inc.",
+      "product": "Asana Business",
+      "category": "productivity",
+      "seats_total": 40,
+      "seats_used": 30,
+      "seats_available": 10,
+      "owner_team": "Operations",
+      "renewal_date": "2027-01-01",
+      "aliases": [
+        "Asana",
+        "Asana Premium"
+      ]
+    },
+    {
+      "id": "ORG-SUB-025",
+      "vendor": "Cloudflare Inc.",
+      "product": "Cloudflare Teams",
+      "category": "security",
+      "seats_total": 50,
+      "seats_used": 38,
+      "seats_available": 12,
+      "owner_team": "Security",
+      "renewal_date": "2026-10-01",
+      "aliases": [
+        "Cloudflare",
+        "Cloudflare Zero Trust"
+      ]
+    },
+    {
+      "id": "ORG-SUB-026",
+      "vendor": "Retool Inc.",
+      "product": "Retool Team",
+      "category": "engineering",
+      "seats_total": 15,
+      "seats_used": 10,
+      "seats_available": 5,
+      "owner_team": "Engineering",
+      "renewal_date": "2026-09-01",
+      "aliases": [
+        "Retool"
+      ]
+    },
+    {
+      "id": "ORG-SUB-027",
+      "vendor": "Descript Inc.",
+      "product": "Descript Creator",
+      "category": "design",
+      "seats_total": 8,
+      "seats_used": 5,
+      "seats_available": 3,
+      "owner_team": "Marketing",
+      "renewal_date": "2026-11-01",
+      "aliases": [
+        "Descript"
+      ]
+    },
+    {
+      "id": "ORG-SUB-028",
+      "vendor": "Intercom Inc.",
+      "product": "Intercom Grow",
+      "category": "communication",
+      "seats_total": 10,
+      "seats_used": 8,
+      "seats_available": 2,
+      "owner_team": "Customer Success",
+      "renewal_date": "2026-08-15",
+      "aliases": [
+        "Intercom"
+      ]
+    },
+    {
+      "id": "ORG-SUB-029",
+      "vendor": "Pagerduty Inc.",
+      "product": "PagerDuty Business",
+      "category": "engineering",
+      "seats_total": 20,
+      "seats_used": 15,
+      "seats_available": 5,
+      "owner_team": "Platform Engineering",
+      "renewal_date": "2026-10-01",
+      "aliases": [
+        "PagerDuty",
+        "PD"
+      ]
+    },
+    {
+      "id": "ORG-SUB-030",
+      "vendor": "Amplitude Inc.",
+      "product": "Amplitude Growth",
+      "category": "analytics",
+      "seats_total": 15,
+      "seats_used": 11,
+      "seats_available": 4,
+      "owner_team": "Product",
+      "renewal_date": "2026-12-15",
+      "aliases": [
+        "Amplitude",
+        "Amplitude Analytics"
+      ]
+    }
+  ],
+  "approved_catalog": [
+    {
+      "product": "Notion Team Plan",
+      "vendor": "Notion Labs Inc.",
+      "category": "productivity",
+      "note": "Org license available \u00e2\u20ac\u201d request seat assignment."
+    },
+    {
+      "product": "Notion Plus",
+      "vendor": "Notion Labs Inc.",
+      "category": "productivity",
+      "note": "Individual plan \u00e2\u20ac\u201d upgrade to team if seats available."
+    },
+    {
+      "product": "Linear Standard",
+      "vendor": "Linear",
+      "category": "productivity",
+      "note": "Approved issue tracker. Request seat from IT."
+    },
+    {
+      "product": "Figma Organization",
+      "vendor": "Figma Inc.",
+      "category": "design",
+      "note": "Org license \u00e2\u20ac\u201d request seat from Design team lead."
+    },
+    {
+      "product": "Figma Professional",
+      "vendor": "Figma Inc.",
+      "category": "design",
+      "note": "Individual fallback if org seats exhausted."
+    },
+    {
+      "product": "GitHub Copilot Business",
+      "vendor": "GitHub Inc.",
+      "category": "ai_tools",
+      "note": "Bundled with GitHub Enterprise \u00e2\u20ac\u201d request seat, do not self-purchase."
+    },
+    {
+      "product": "GitHub Copilot Individual",
+      "vendor": "GitHub Inc.",
+      "category": "ai_tools",
+      "note": "Only if Copilot Business seat unavailable."
+    },
+    {
+      "product": "Claude Pro",
+      "vendor": "Anthropic",
+      "category": "ai_tools",
+      "note": "Approved for individual reimbursement up to MYR 120/month. Claude Team is a separate org tier and does not substitute for personal Claude Pro access."
+    },
+    {
+      "product": "Claude Team",
+      "vendor": "Anthropic",
+      "category": "ai_tools",
+      "note": "Org license \u00e2\u20ac\u201d request seat from AI Platform."
+    },
+    {
+      "product": "ChatGPT Plus",
+      "vendor": "OpenAI",
+      "category": "ai_tools",
+      "note": "ChatGPT Team org license is FULL \u00e2\u20ac\u201d individual Plus reimbursable up to MYR 100."
+    },
+    {
+      "product": "Perplexity Pro",
+      "vendor": "Perplexity AI",
+      "category": "ai_tools",
+      "note": "Approved individual AI tool up to MYR 100/month."
+    },
+    {
+      "product": "Slack Business+",
+      "vendor": "Slack Technologies",
+      "category": "communication",
+      "note": "Org license \u00e2\u20ac\u201d contact IT."
+    },
+    {
+      "product": "Zoom Pro",
+      "vendor": "Zoom Video Communications",
+      "category": "communication",
+      "note": "Org Business license \u00e2\u20ac\u201d request seat from IT."
+    },
+    {
+      "product": "Loom Business",
+      "vendor": "Loom Inc.",
+      "category": "communication",
+      "note": "Org license \u00e2\u20ac\u201d request seat from Product team."
+    },
+    {
+      "product": "Typeform Business",
+      "vendor": "Typeform",
+      "category": "productivity",
+      "note": "Approved for form/survey use cases."
+    },
+    {
+      "product": "Miro Business",
+      "vendor": "Miro",
+      "category": "design",
+      "note": "Org license \u00e2\u20ac\u201d request seat from Product team."
+    },
+    {
+      "product": "Canva for Teams",
+      "vendor": "Canva",
+      "category": "design",
+      "note": "Org license \u00e2\u20ac\u201d request seat from Marketing."
+    },
+    {
+      "product": "Adobe Creative Cloud",
+      "vendor": "Adobe",
+      "category": "design",
+      "note": "Approved for Design team \u00e2\u20ac\u201d manager approval required."
+    },
+    {
+      "product": "Sketch",
+      "vendor": "Bohemian Coding",
+      "category": "design",
+      "note": "Approved for macOS Design team members."
+    },
+    {
+      "product": "IntelliJ IDEA Ultimate",
+      "vendor": "JetBrains",
+      "category": "engineering",
+      "note": "JetBrains All Products org license covers this."
+    },
+    {
+      "product": "VS Code (free)",
+      "vendor": "Microsoft",
+      "category": "engineering",
+      "note": "Free \u00e2\u20ac\u201d no reimbursement needed."
+    },
+    {
+      "product": "Postman Team Plan",
+      "vendor": "Postman Inc.",
+      "category": "engineering",
+      "note": "Org license \u00e2\u20ac\u201d request seat from Engineering."
+    },
+    {
+      "product": "Sentry Team",
+      "vendor": "Sentry",
+      "category": "engineering",
+      "note": "Approved error tracking up to MYR 200/month per team."
+    },
+    {
+      "product": "PagerDuty Business",
+      "vendor": "Pagerduty Inc.",
+      "category": "engineering",
+      "note": "Org license \u00e2\u20ac\u201d contact Platform Engineering."
+    },
+    {
+      "product": "Datadog Pro",
+      "vendor": "Datadog Inc.",
+      "category": "analytics",
+      "note": "Org license \u00e2\u20ac\u201d contact Platform Engineering."
+    },
+    {
+      "product": "Amplitude Growth",
+      "vendor": "Amplitude Inc.",
+      "category": "analytics",
+      "note": "Org license \u00e2\u20ac\u201d request seat from Product."
+    },
+    {
+      "product": "Mixpanel Growth",
+      "vendor": "Mixpanel",
+      "category": "analytics",
+      "note": "Approved analytics up to MYR 300/month."
+    },
+    {
+      "product": "Tableau Creator",
+      "vendor": "Tableau Software",
+      "category": "analytics",
+      "note": "Org license \u00e2\u20ac\u201d Data team only."
+    },
+    {
+      "product": "Looker Studio (free)",
+      "vendor": "Google LLC",
+      "category": "analytics",
+      "note": "Free \u00e2\u20ac\u201d no reimbursement needed."
+    },
+    {
+      "product": "1Password Teams",
+      "vendor": "1Password",
+      "category": "security",
+      "note": "Org license \u00e2\u20ac\u201d contact Security team."
+    },
+    {
+      "product": "LastPass Teams",
+      "vendor": "LastPass",
+      "category": "security",
+      "note": "Deprecated \u00e2\u20ac\u201d migrate to 1Password."
+    },
+    {
+      "product": "Cloudflare Teams",
+      "vendor": "Cloudflare Inc.",
+      "category": "security",
+      "note": "Org license \u00e2\u20ac\u201d contact Security."
+    },
+    {
+      "product": "Grammarly Business",
+      "vendor": "Grammarly Inc.",
+      "category": "productivity",
+      "note": "Org license \u00e2\u20ac\u201d request seat from Marketing."
+    },
+    {
+      "product": "Calendly Teams",
+      "vendor": "Calendly",
+      "category": "productivity",
+      "note": "Org license \u00e2\u20ac\u201d request seat from Sales."
+    },
+    {
+      "product": "Asana Business",
+      "vendor": "Asana Inc.",
+      "category": "productivity",
+      "note": "Org license \u00e2\u20ac\u201d request seat from Operations."
+    }
+  ]
 }

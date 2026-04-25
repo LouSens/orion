@@ -88,12 +88,12 @@ def tmp_data_dir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     # Retarget any already-instantiated Ledger singletons.
     for module_path in ("app.main", "app.agents.recorder"):
         try:
-            mod = __import__(module_path, fromlist=["_ledger"])
+            mod = __import__(module_path, fromlist=["_ledger", "ledger"])
         except ImportError:
             continue
-        ledger = getattr(mod, "_ledger", None)
-        if ledger is not None:
-            monkeypatch.setattr(ledger, "path", ledger_path)
+        ledger_inst = getattr(mod, "_ledger", getattr(mod, "ledger", None))
+        if ledger_inst is not None:
+            monkeypatch.setattr(ledger_inst, "path", ledger_path)
 
     return tmp_path
 

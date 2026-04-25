@@ -118,6 +118,14 @@ class TestSearchEmployeeHistory:
         assert out["all_time_total"] == 0
 
 
+@pytest.fixture
+def empty_data_dir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
+    """Data dir with no ledger and no catalog — exercises the file-not-found guards."""
+    from app.config import settings
+    monkeypatch.setattr(settings, "data_dir", tmp_path)
+    return tmp_path
+
+
 class TestLookupCatalog:
     def test_finds_active_license_via_alias(self, seeded_data_dir: Path) -> None:
         out = json.loads(lookup_subscription_catalog.invoke({"merchant_name": "Notion Plus"}))
@@ -132,3 +140,66 @@ class TestLookupCatalog:
         out = json.loads(lookup_subscription_catalog.invoke({"merchant_name": "Tableau"}))
         assert out["found_active"] is False
         assert out["found_in_catalog"] is False
+
+
+class TestMissingFiles:
+    def test_no_ledger_amount_search_returns_empty(self, empty_data_dir: Path) -> None:
+        # _load_ledger() returns [] when file absent; duplicate_signals.last_seen_days_ago is None.
+        out = json.loads(search_ledger_by_amount.invoke({"amount": 100.0, "employee_id": "E-X"}))
+        assert out["matches"] == []
+        assert out["duplicate_signals"]["last_seen_days_ago"] is None
+
+    def test_no_ledger_merchant_search_has_zero_vendor_signals(self, empty_data_dir: Path) -> None:
+        out = json.loads(search_ledger_by_merchant.invoke({"merchant_name": "notion"}))
+        assert out["matches"] == []
+        assert out["vendor_signals"]["total_claims"] == 0
+
+    def test_no_catalog_file_lookup_returns_not_found(self, empty_data_dir: Path) -> None:
+        out = json.loads(lookup_subscription_catalog.invoke({"merchant_name": "notion"}))
+        assert out["found_active"] is False
+        assert out["found_in_catalog"] is False
+
+
+class TestGuardClauses:
+    def test_employee_history_blank_id_returns_note(self) -> None:
+        out = json.loads(search_employee_history.invoke({"employee_id": ""}))
+        assert "note" in out
+        assert out["matches"] == []
+
+    def test_catalog_lookup_blank_merchant_returns_note(self) -> None:
+        out = json.loads(lookup_subscription_catalog.invoke({"merchant_name": ""}))
+        assert "note" in out
+
+
+class TestZScorePath:
+    def test_full_90_day_window_triggers_zscore_computation(self, seeded_data_dir: Path) -> None:
+        # E-1 has claims 10 days and 40 days ago — different ISO weeks.
+        # days_back=90 captures both, so _compute_spike_signals reaches the stdev branch.
+        out = json.loads(search_employee_history.invoke(
+            {"employee_id": "E-1", "days_back": 90}
+        ))
+        assert out["total_in_window"] == 2
+        sigs = out["anomaly_signals"]
+        assert "z_score" in sigs
+        assert "weeks_analyzed" in sigs
+        assert sigs["weeks_analyzed"] == 2
+
+
+class TestDebugLogging:
+    def test_merchant_debug_logging_does_not_crash(
+        self, seeded_data_dir: Path, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        from app.config import settings
+        monkeypatch.setattr(settings, "fuzzy_debug_logging", True)
+        out = json.loads(search_ledger_by_merchant.invoke(
+            {"merchant_name": "notion", "employee_id": "E-1"}
+        ))
+        assert out["count"] >= 0
+
+    def test_catalog_debug_logging_does_not_crash(
+        self, seeded_data_dir: Path, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        from app.config import settings
+        monkeypatch.setattr(settings, "fuzzy_debug_logging", True)
+        out = json.loads(lookup_subscription_catalog.invoke({"merchant_name": "notion"}))
+        assert out["found_active"] is True

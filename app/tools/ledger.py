@@ -33,3 +33,26 @@ class Ledger:
 
     def by_employee(self, employee_id: str) -> list[dict[str, Any]]:
         return [r for r in self.all() if r.get("employee_id") == employee_id]
+
+    def delete(self, claim_id: str) -> bool:
+        with self._lock:
+            data = self._read()
+            original_len = len(data["records"])
+            data["records"] = [r for r in data["records"] if r.get("claim_id") != claim_id]
+            if len(data["records"]) < original_len:
+                self._write(data)
+                return True
+            return False
+
+    def clear(self, employee_id: str | None = None) -> int:
+        with self._lock:
+            data = self._read()
+            if employee_id:
+                original = data["records"]
+                data["records"] = [r for r in original if r.get("employee_id") != employee_id]
+                removed = len(original) - len(data["records"])
+            else:
+                removed = len(data["records"])
+                data["records"] = []
+            self._write(data)
+            return removed

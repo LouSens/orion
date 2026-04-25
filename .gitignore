@@ -1,11 +1,39 @@
-﻿.claude/
-.env
-__pycache__/
-*/__pycache__/
+
+# Dependencies
+**/node_modules/
+**/__pycache__/
+**/.venv/
 *.pyc
-.venv/
 venv/
+ENV/
+env/
 .pytest_cache/
-.idea/
-.vscode/
+.mypy_cache/
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
 *.log
+
+# Build & Artifacts
+dist/
+build/
+out/
+app/web/frontend/dist/
+app/web/frontend/package/
+frontend/package/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project Specific
+.claude/
+metadata.json

@@ -21,6 +21,7 @@ from pathlib import Path
 from typing import Any, Optional
 
 from fastapi import FastAPI, File, HTTPException, Query, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse, Response
 from langsmith import Client as LangSmithClient
 from langsmith.run_helpers import get_current_run_tree, traceable
@@ -39,10 +40,23 @@ from .tools import (
 wire_langsmith()
 
 app = FastAPI(title="Orion Reimburse", version="0.2.0")
-_ledger = Ledger()
-_index_html = (Path(__file__).parent / "web" / "index.html").read_text(encoding="utf-8")
-_ls_client: LangSmithClient | None = None
+from fastapi.staticfiles import StaticFiles
 
+ledger = Ledger()
+_ls_client: LangSmithClient | None = None
+frontend_dist = Path(__file__).parent / "web" / "frontend" / "dist"
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://0.0.0.0:3000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -96,9 +110,8 @@ def _run_workflow(initial: WorkflowState) -> tuple[WorkflowState, str | None]:
     return final, run_id
 
 
-@app.get("/", response_class=HTMLResponse)
-def index() -> str:
-    return _index_html
+# Note: We replaced the old root '/' route with a catch-all at the bottom of the file
+# so React Router can handle frontend routing.
 
 
 @app.get("/api/health")
@@ -116,7 +129,7 @@ def health() -> dict:
 def submit(payload: ReimbursementSubmission) -> JSONResponse:
     # P1.6 — Idempotency gate: compute submission hash, return cached result on duplicate hit
     sub_hash = _submission_hash(payload)
-    for r in _ledger.all():
+    for r in ledger.all():
         if r.get("submission_hash") == sub_hash:
             return JSONResponse({
                 "cached": True,
@@ -172,8 +185,22 @@ async def parse_upload(file: UploadFile = File(...)) -> JSONResponse:
 
 
 @app.get("/api/ledger")
-def ledger() -> dict:
-    return {"records": _ledger.all()}
+def get_ledger() -> dict:
+    return {"records": ledger.all()}
+
+
+@app.delete("/api/ledger/{claim_id}")
+def delete_ledger_record(claim_id: str) -> dict:
+    found = ledger.delete(claim_id)
+    if not found:
+        raise HTTPException(404, f"Record {claim_id} not found")
+    return {"deleted": claim_id}
+
+
+@app.delete("/api/ledger")
+def clear_ledger(employee_id: Optional[str] = Query(None)) -> dict:
+    removed = ledger.clear(employee_id or None)
+    return {"removed": removed}
 
 
 @app.get("/api/audit/export")
@@ -184,7 +211,7 @@ def audit_export(
     to_date: Optional[str] = Query(None, description="ISO date upper bound (e.g. 2026-04-30)"),
 ) -> Response:
     """Export filtered ledger records as a CSV file (P4.1)."""
-    records = _filter_records(_ledger.all(), employee_id, decision, from_date, to_date)
+    records = _filter_records(ledger.all(), employee_id, decision, from_date, to_date)
     fields = [
         "claim_id", "employee_id", "vendor", "product",
         "amount_myr", "decision", "recorded_at", "submission_hash",
@@ -209,7 +236,7 @@ def audit_report(
     to_date: Optional[str] = Query(None),
 ) -> Response:
     """Return a markdown audit summary with decision stats (P4.1)."""
-    all_records = _ledger.all()
+    all_records = ledger.all()
     records = _filter_records(all_records, employee_id, decision, from_date, to_date)
 
     total = len(records)
@@ -308,9 +335,27 @@ def _langsmith_refs(run_id: str | None) -> dict:
     return info
 
 
+# ---------------------------------------------------------------------------
+# Frontend Serving (Must be at the very bottom)
+# ---------------------------------------------------------------------------
+
+if (frontend_dist / "assets").exists():
+    app.mount("/assets", StaticFiles(directory=frontend_dist / "assets"), name="assets")
+
+@app.get("/{full_path:path}", response_class=HTMLResponse)
+def serve_frontend(full_path: str):
+    if full_path.startswith("api/"):
+        raise HTTPException(status_code=404, detail="API route not found")
+    
+    index_file = frontend_dist / "index.html"
+    if index_file.exists():
+        return index_file.read_text(encoding="utf-8")
+    return "Frontend build not found. Run 'npm run build' in app/web/frontend."
+
+
 def run() -> None:
     import uvicorn
-    uvicorn.run("app.main:app", host=settings.app_host, port=settings.app_port, reload=False)
+    uvicorn.run("app.main:app", host="localhost", port=settings.app_port, reload=False)
 
 
 if __name__ == "__main__":

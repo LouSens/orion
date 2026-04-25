@@ -45,6 +45,42 @@ def test_by_employee_filters_correctly(empty_ledger: Ledger) -> None:
     assert {r["claim_id"] for r in by_e1} == {"C-1", "C-3"}
 
 
+def test_delete_returns_true_when_claim_exists(empty_ledger: Ledger) -> None:
+    empty_ledger.append({"claim_id": "C-DEL", "employee_id": "E-1", "amount_myr": 100})
+    assert empty_ledger.delete("C-DEL") is True
+
+
+def test_delete_returns_false_when_claim_not_found(empty_ledger: Ledger) -> None:
+    assert empty_ledger.delete("C-NOPE") is False
+
+
+def test_delete_removes_only_matching_claim(empty_ledger: Ledger) -> None:
+    empty_ledger.append({"claim_id": "C-1", "employee_id": "E-1", "amount_myr": 100})
+    empty_ledger.append({"claim_id": "C-2", "employee_id": "E-1", "amount_myr": 200})
+    empty_ledger.delete("C-1")
+    remaining = [r["claim_id"] for r in empty_ledger.all()]
+    assert remaining == ["C-2"]
+
+
+def test_clear_all_removes_every_record(empty_ledger: Ledger) -> None:
+    for i in range(3):
+        empty_ledger.append({"claim_id": f"C-{i}", "employee_id": "E-1", "amount_myr": i * 10})
+    removed = empty_ledger.clear()
+    assert removed == 3
+    assert empty_ledger.all() == []
+
+
+def test_clear_by_employee_removes_only_matches(empty_ledger: Ledger) -> None:
+    empty_ledger.append({"claim_id": "C-1", "employee_id": "E-1", "amount_myr": 100})
+    empty_ledger.append({"claim_id": "C-2", "employee_id": "E-1", "amount_myr": 200})
+    empty_ledger.append({"claim_id": "C-3", "employee_id": "E-2", "amount_myr": 300})
+    removed = empty_ledger.clear(employee_id="E-1")
+    assert removed == 2
+    remaining = empty_ledger.all()
+    assert len(remaining) == 1
+    assert remaining[0]["employee_id"] == "E-2"
+
+
 def test_concurrent_appends_serialise(empty_ledger: Ledger) -> None:
     """The lock around _read/_write should prevent torn writes when called
     from multiple threads. Smoke check, not a formal stress test."""

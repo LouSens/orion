@@ -12,7 +12,7 @@ Orion automates the end-to-end expense reimbursement workflow using a multi-agen
 
 | Resource | Link |
 |----------|------|
-| Demo & Pitch Video (10 min) | https://drive.google.com/file/d/1f8W8ajXsWMKWhVOu33ozAjQPKrCmXq0-/view?usp=sharing |
+| Demo & Pitch Video (10 min) | https://drive.google.com/drive/folders/1uS_SWztFofZyJsnMjqxJLOxFHvmt5pCQ?usp=sharing |
 
 ---
 

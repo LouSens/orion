@@ -1,0 +1,28 @@
+# Decision-band expectations per scenario.
+#
+# Each scenario must terminate with `approval.decision` ∈ `decision_band`.
+# `trace_includes` lists nodes that MUST appear in `state["trace"]`.
+# `trace_excludes` lists nodes that must NOT appear (used to assert fast-paths).
+#
+# Owned by the team — every prompt change that moves a scenario to a new band
+# must update the corresponding row here in the same PR.
+
+clean:
+  decision_band: [auto_approve]
+  trace_includes: [intake, critic, recorder]
+  trace_excludes: [escalate, clarify]
+
+duplicate:
+  decision_band: [auto_reject]
+  trace_includes: [intake, critic, recorder]
+  trace_excludes: [escalate]
+
+semantic_dup:
+  decision_band: [escalate_manager, auto_reject]
+  trace_includes: [intake, critic, recorder]
+  trace_excludes: [escalate, clarify]
+
+high_value:
+  decision_band: [escalate_finance, escalate_manager]
+  trace_includes: [intake, critic, recorder]
+  trace_excludes: [escalate, clarify]

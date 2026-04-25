@@ -1927,6 +1927,214 @@
         "role:direct_manager"
       ],
       "submission_hash": "9d09e3c965f3255778af2868f9f9aa68f6b968aa7f8728396eb3d68b04f4f583"
+    },
+    {
+      "claim_id": "CLM-963AEFEE",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic PBC",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-25T16:04:42.446781+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1001",
+        "role:finance_ops"
+      ],
+      "submission_hash": "06c59ccf94f210127ef1d764548dd91eadb0aaa77423e437ba6331cdca1698d4"
+    },
+    {
+      "claim_id": "CLM-6C85DFE6",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic PBC",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-25T16:04:42.466534+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1001",
+        "role:finance_ops"
+      ],
+      "submission_hash": "06c59ccf94f210127ef1d764548dd91eadb0aaa77423e437ba6331cdca1698d4"
+    },
+    {
+      "claim_id": "CLM-7DA81859",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic PBC",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-25T16:04:42.478347+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1001",
+        "role:finance_ops"
+      ],
+      "submission_hash": "06c59ccf94f210127ef1d764548dd91eadb0aaa77423e437ba6331cdca1698d4"
+    },
+    {
+      "claim_id": "CLM-8532C788",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic PBC",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-25T16:04:42.787818+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1001",
+        "role:finance_ops"
+      ],
+      "submission_hash": "06c59ccf94f210127ef1d764548dd91eadb0aaa77423e437ba6331cdca1698d4"
+    },
+    {
+      "claim_id": "CLM-E61F7F6B",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic PBC",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-25T16:04:42.811607+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1001",
+        "role:finance_ops"
+      ],
+      "submission_hash": "06c59ccf94f210127ef1d764548dd91eadb0aaa77423e437ba6331cdca1698d4"
+    },
+    {
+      "claim_id": "CLM-AE9C56CF",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic PBC",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-25T16:04:42.831872+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1001",
+        "role:finance_ops"
+      ],
+      "submission_hash": "06c59ccf94f210127ef1d764548dd91eadb0aaa77423e437ba6331cdca1698d4"
+    },
+    {
+      "claim_id": "CLM-TEST-CLEAN",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic PBC",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-25T16:04:42.860479+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1001",
+        "role:finance_ops"
+      ],
+      "submission_hash": null
+    },
+    {
+      "claim_id": "CLM-TEST-DUPLICATE",
+      "employee_id": "E003",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Plus",
+      "amount_myr": 250.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T16:04:42.881805+00:00",
+      "notification_sent_to": [
+        "employee:E003"
+      ],
+      "submission_hash": null
+    },
+    {
+      "claim_id": "CLM-TEST-SEMANTIC_DUP",
+      "employee_id": "EMP-1003",
+      "vendor": "OpenAI",
+      "product": "ChatGPT Plus",
+      "amount_myr": 96.0,
+      "decision": "escalate_manager",
+      "recorded_at": "2026-04-25T16:04:42.902443+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1003",
+        "role:direct_manager"
+      ],
+      "submission_hash": null
+    },
+    {
+      "claim_id": "CLM-TEST-HIGH_VALUE",
+      "employee_id": "EMP-1004",
+      "vendor": "Datadog Inc.",
+      "product": "Datadog Pro",
+      "amount_myr": 7800.0,
+      "decision": "escalate_finance",
+      "recorded_at": "2026-04-25T16:04:42.922761+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1004",
+        "role:finance_controller"
+      ],
+      "submission_hash": null
+    },
+    {
+      "claim_id": "CLM-RECORDER-TEST",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic PBC",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-25T16:04:42.945465+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1001",
+        "role:finance_ops"
+      ],
+      "submission_hash": null
+    },
+    {
+      "claim_id": "CLM-TS-clean",
+      "employee_id": "EMP-1001",
+      "vendor": "Anthropic PBC",
+      "product": "Claude Pro",
+      "amount_myr": 94.5,
+      "decision": "auto_approve",
+      "recorded_at": "2026-04-25T16:04:42.971583+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1001",
+        "role:finance_ops"
+      ],
+      "submission_hash": null
+    },
+    {
+      "claim_id": "CLM-TS-duplicate",
+      "employee_id": "E003",
+      "vendor": "Notion Labs Inc.",
+      "product": "Notion Plus",
+      "amount_myr": 250.0,
+      "decision": "auto_reject",
+      "recorded_at": "2026-04-25T16:04:42.977530+00:00",
+      "notification_sent_to": [
+        "employee:E003"
+      ],
+      "submission_hash": null
+    },
+    {
+      "claim_id": "CLM-TS-semantic_dup",
+      "employee_id": "EMP-1003",
+      "vendor": "OpenAI",
+      "product": "ChatGPT Plus",
+      "amount_myr": 96.0,
+      "decision": "escalate_manager",
+      "recorded_at": "2026-04-25T16:04:42.983716+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1003",
+        "role:direct_manager"
+      ],
+      "submission_hash": null
+    },
+    {
+      "claim_id": "CLM-TS-high_value",
+      "employee_id": "EMP-1004",
+      "vendor": "Datadog Inc.",
+      "product": "Datadog Pro",
+      "amount_myr": 7800.0,
+      "decision": "escalate_finance",
+      "recorded_at": "2026-04-25T16:04:42.991182+00:00",
+      "notification_sent_to": [
+        "employee:EMP-1004",
+        "role:finance_controller"
+      ],
+      "submission_hash": null
     }
   ]
 }

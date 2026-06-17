@@ -20,7 +20,7 @@ import uuid
 from pathlib import Path
 from typing import Any, Optional
 
-from fastapi import FastAPI, File, HTTPException, Query, UploadFile
+from fastapi import Depends, FastAPI, File, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse, Response
 from langsmith import Client as LangSmithClient
@@ -29,6 +29,7 @@ from langsmith.run_helpers import get_current_run_tree, traceable
 from .config import langsmith_is_live, settings, wire_langsmith
 from .graph import workflow
 from .schemas import ReimbursementSubmission
+from .security import RateLimitMiddleware, api_key_dependency, sanitise_submission
 from .state import WorkflowState
 from .tools import (
     DocumentTooLargeError,
@@ -44,7 +45,10 @@ from fastapi.staticfiles import StaticFiles
 
 ledger = Ledger()
 _ls_client: LangSmithClient | None = None
-frontend_dist = Path(__file__).parent / "web" / "frontend" / "dist"
+frontend_dist = Path(__file__).resolve().parent.parent / "frontend" / "dist"
+
+# Rate limiting must be added before CORS so limits are applied first.
+app.add_middleware(RateLimitMiddleware)
 
 app.add_middleware(
     CORSMiddleware,
@@ -126,7 +130,13 @@ def health() -> dict:
 
 
 @app.post("/api/submit")
-def submit(payload: ReimbursementSubmission) -> JSONResponse:
+def submit(
+    payload: ReimbursementSubmission,
+    _key: str = Depends(api_key_dependency),
+) -> JSONResponse:
+    # Security: sanitise all string fields before entering the workflow.
+    payload = sanitise_submission(payload)
+
     # P1.6 — Idempotency gate: compute submission hash, return cached result on duplicate hit
     sub_hash = _submission_hash(payload)
     for r in ledger.all():
@@ -162,7 +172,10 @@ def submit(payload: ReimbursementSubmission) -> JSONResponse:
 
 
 @app.post("/api/parse-document")
-async def parse_upload(file: UploadFile = File(...)) -> JSONResponse:
+async def parse_upload(
+    file: UploadFile = File(...),
+    _key: str = Depends(api_key_dependency),
+) -> JSONResponse:
     """Parse a PDF/DOCX/TXT and return its extracted text.
     The UI pipes the returned text into the receipt_text textarea so the
     Intake agent can read it verbatim."""
@@ -190,7 +203,10 @@ def get_ledger() -> dict:
 
 
 @app.delete("/api/ledger/{claim_id}")
-def delete_ledger_record(claim_id: str) -> dict:
+def delete_ledger_record(
+    claim_id: str,
+    _key: str = Depends(api_key_dependency),
+) -> dict:
     found = ledger.delete(claim_id)
     if not found:
         raise HTTPException(404, f"Record {claim_id} not found")
@@ -198,7 +214,10 @@ def delete_ledger_record(claim_id: str) -> dict:
 
 
 @app.delete("/api/ledger")
-def clear_ledger(employee_id: Optional[str] = Query(None)) -> dict:
+def clear_ledger(
+    employee_id: Optional[str] = Query(None),
+    _key: str = Depends(api_key_dependency),
+) -> dict:
     removed = ledger.clear(employee_id or None)
     return {"removed": removed}
 
@@ -350,12 +369,12 @@ def serve_frontend(full_path: str):
     index_file = frontend_dist / "index.html"
     if index_file.exists():
         return index_file.read_text(encoding="utf-8")
-    return "Frontend build not found. Run 'npm run build' in app/web/frontend."
+    return "Frontend build not found. Run 'npm run build' in frontend/."
 
 
 def run() -> None:
     import uvicorn
-    uvicorn.run("app.main:app", host="localhost", port=settings.app_port, reload=False)
+    uvicorn.run("backend.main:app", host="localhost", port=settings.app_port, reload=False)
 
 
 if __name__ == "__main__":

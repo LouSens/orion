@@ -38,6 +38,12 @@ class Settings(BaseSettings):
     app_port: int = 8000
     max_upload_bytes: int = 8 * 1024 * 1024  # 8 MB
 
+    # ---- Security ----
+    # Comma-separated list of valid API keys for the X-API-Key header.
+    # Set to "dev-key" in development; use long random strings in production.
+    # When empty, falls back to the built-in demo keys {"dev-key", "demo"}.
+    orion_api_keys: str = "dev-key"
+
     # ---- Policy thresholds (guidance, not hard branches) ----
     auto_approve_limit_myr: float = 500.0
     escalation_limit_myr: float = 5000.0

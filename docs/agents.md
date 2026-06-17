@@ -1,10 +1,10 @@
-# Orion Agents — Current Implementation Reference
+﻿# Orion Agents — Current Implementation Reference
 
 This document describes each agent exactly as implemented in the codebase.
 
 ---
 
-## 1. Intake Agent — `app/agents/intake.py`
+## 1. Intake Agent — `backend/agents/intake.py`
 
 **Role:** Data normaliser — unstructured → structured.
 
@@ -13,12 +13,12 @@ This document describes each agent exactly as implemented in the codebase.
 **Mechanism:** Regex currency pre-pass, then a single `chat_structured()` call.
 
 **Regex pre-pass (anti-hallucination guard):**
-Before the LLM runs, `extract_largest_amount()` from `app/tools/amount_extractor.py`
+Before the LLM runs, `extract_largest_amount()` from `backend/tools/amount_extractor.py`
 scans the receipt text for currency tokens (handles RM, MYR, USD, €, £, ¥) and finds
 the largest value. If the LLM's extracted amount diverges from the regex value by
 more than 20%, `confidence` is forced below `0.6` to flag the discrepancy downstream.
 
-**Output schema:** `IntakeClaim` (app/schemas.py)
+**Output schema:** `IntakeClaim` (backend/schemas.py)
 
 **Key fields:**
 - `vendor`, `product`, `category`, `amount_myr`, `currency_original`, `amount_original`
@@ -28,7 +28,7 @@ more than 20%, `confidence` is forced below `0.6` to flag the discrepancy downst
 
 ---
 
-## 2. Intelligence Agent — `app/agents/intelligence.py`
+## 2. Intelligence Agent — `backend/agents/intelligence.py`
 
 **Role:** Fraud investigator and duplicate detector.
 
@@ -40,7 +40,7 @@ The LLM autonomously decides which tools to call, in what order, and whether to
 re-call a tool. All four tools return **pre-computed signals** — the LLM narrates
 and interprets them; it never calculates scores or ratios itself.
 
-**Tools available (defined in `app/tools/ledger_search.py`):**
+**Tools available (defined in `backend/tools/ledger_search.py`):**
 
 | Tool | Args | Returns |
 |---|---|---|
@@ -66,7 +66,7 @@ If the loop cap is reached without a `done` signal, the report is flagged as **d
 
 ---
 
-## 3. Policy Check — `app/tools/policy_engine.py` (called from `app/graph.py`)
+## 3. Policy Check — `backend/tools/policy_engine.py` (called from `backend/graph.py`)
 
 **Role:** Deterministic compliance evaluator — no LLM.
 
@@ -104,7 +104,7 @@ this flag is set, saving approximately 7 seconds per hard-violation case.
 
 ---
 
-## 4. Supervisor Agent — `app/agents/supervisor.py`
+## 4. Supervisor Agent — `backend/agents/supervisor.py`
 
 **Role:** Dynamic task orchestrator — the central routing brain.
 
@@ -135,7 +135,7 @@ forces `request_human_escalation`, guaranteeing termination.
 
 ---
 
-## 5. Critic Agent — `app/agents/critic.py`
+## 5. Critic Agent — `backend/agents/critic.py`
 
 **Role:** Adversarial financial reviewer — the final decision maker.
 
@@ -168,7 +168,7 @@ reason about edge cases.
 
 ---
 
-## 6. Recorder Agent — `app/agents/recorder.py`
+## 6. Recorder Agent — `backend/agents/recorder.py`
 
 **Role:** Archivist — deterministic, no LLM.
 
@@ -185,7 +185,7 @@ persist it to `data/ledger.json`. Sets `notification_sent_to` based on decision:
 
 ---
 
-## Helper Nodes (in `app/graph.py`, no separate file)
+## Helper Nodes (in `backend/graph.py`, no separate file)
 
 ### `merge_intel_policy`
 

@@ -28,7 +28,7 @@ jobs:
           LANGSMITH_TRACING: "false"
         run: |
           pytest -ra \
-            --cov=app \
+            --cov=backend \
             --cov-report=term-missing \
             --cov-report=xml \
             --cov-fail-under=80

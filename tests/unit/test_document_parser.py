@@ -1,4 +1,4 @@
-"""Unit tests for the document parser.
+﻿"""Unit tests for the document parser.
 
 Requirement: R9 — UI accepts PDF/DOCX/TXT uploads piped to Intake.
 Module under test: app/tools/document_parser.py
@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import pytest
 
-from app.tools.document_parser import (
+from backend.tools.document_parser import (
     DocumentTooLargeError,
     UnsupportedDocumentError,
     parse_document,

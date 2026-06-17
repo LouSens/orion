@@ -1,6 +1,165 @@
-# Orion Workflow — Current Implementation Guide
+﻿# Orion Workflow — Current Implementation Guide
 
-This document describes the execution flow as actually implemented in `app/graph.py`.
+This document describes the execution flow as actually implemented in `backend/graph.py`.
+
+---
+
+## Sequence Diagrams
+
+The following sequence diagrams cover the three most common claim journeys through
+the Orion multi-agent pipeline.
+
+### 1. Happy Path — Auto-Approve
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Employee
+    participant API as FastAPI /api/submit
+    participant Auth as Security Middleware
+    participant Intake
+    participant Intel as Intelligence Agent
+    participant Policy as Policy Engine
+    participant Merge as Merge Node
+    participant Supervisor
+    participant Critic
+    participant Recorder
+    participant Ledger as ledger.json
+
+    Employee->>API: POST /api/submit {X-API-Key}
+    API->>Auth: Validate API key + rate limit
+    Auth-->>API: OK
+    API->>API: Sanitise & hash submission (idempotency)
+    API->>Intake: run_workflow(WorkflowState)
+    Intake->>Intake: extract_largest_amount() [regex]
+    Intake->>Intake: chat_structured() → IntakeClaim
+    Intake-->>Intel: state[intake]
+    Intake-->>Policy: state[intake]
+
+    par Parallel execution
+        Intel->>Intel: tool-calling loop (≤5 iters)
+        Intel->>Intel: search_ledger_by_amount()
+        Intel->>Intel: search_ledger_by_merchant()
+        Intel->>Intel: lookup_subscription_catalog()
+        Intel->>Intel: chat_structured() → IntelligenceReport
+    and
+        Policy->>Policy: evaluate hard rules (zero LLM)
+        Policy->>Policy: → PolicyReport {fast_reject=false}
+    end
+
+    Intel-->>Merge: IntelligenceReport
+    Policy-->>Merge: PolicyReport
+    Merge->>Merge: _fast_reject_route() → no fast reject
+    Merge->>Supervisor: route to Supervisor
+
+    Supervisor->>Supervisor: chat_structured() temp=0.0
+    Supervisor-->>Critic: route_to_approval
+
+    Critic->>Critic: adversarial LLM call (tries to reject)
+    Critic-->>Recorder: ApprovalOutcome {auto_approve}
+
+    Recorder->>Ledger: write LedgerRecord
+    Recorder-->>API: terminal=true
+    API-->>Employee: 200 {decision: auto_approve, claim_id, trace}
+```
+
+### 2. Duplicate / Fast-Reject Path
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Employee
+    participant API as FastAPI /api/submit
+    participant Auth as Security Middleware
+    participant Intake
+    participant Intel as Intelligence Agent
+    participant Policy as Policy Engine
+    participant Merge as Merge Node
+    participant Critic
+    participant Recorder
+    participant Ledger as ledger.json
+
+    Employee->>API: POST /api/submit (duplicate claim)
+    API->>Auth: Validate API key + rate limit
+    Auth-->>API: OK
+    API->>API: SHA-256 hash matches existing record
+    API-->>Employee: 200 {cached: true, decision: ...} (no LLM calls)
+
+    Note over API,Employee: --- OR: claim passes idempotency but Intel detects duplicate ---
+
+    Employee->>API: POST /api/submit (semantically duplicate)
+    API->>API: No hash match → proceed
+    API->>Intake: run_workflow()
+    Intake->>Intake: extract + chat_structured()
+
+    par Parallel execution
+        Intel->>Intel: search_ledger_by_amount() → high similarity score
+        Intel->>Intel: search_ledger_by_merchant() → same vendor found
+        Intel-->>Merge: IntelligenceReport {is_likely_duplicate: true}
+    and
+        Policy->>Policy: hard rule check
+        Policy-->>Merge: PolicyReport
+    end
+
+    Merge->>Merge: POL-006: set fast_reject=true
+    Merge->>Critic: _fast_reject_route() → skip Supervisor
+
+    Critic->>Critic: adversarial LLM (duplicate evidence)
+    Critic-->>Recorder: ApprovalOutcome {auto_reject}
+
+    Recorder->>Ledger: write LedgerRecord {auto_reject}
+    Recorder-->>API: terminal=true
+    API-->>Employee: 200 {decision: auto_reject}
+```
+
+### 3. Escalation Path — Manager Review
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Employee
+    participant API as FastAPI /api/submit
+    participant Intake
+    participant Intel as Intelligence Agent
+    participant Policy as Policy Engine
+    participant Merge as Merge Node
+    participant Supervisor
+    participant Critic
+    participant Recorder
+    participant Ledger as ledger.json
+    actor Manager
+
+    Employee->>API: POST /api/submit (ambiguous high-value claim)
+    API->>Intake: run_workflow()
+    Intake->>Intake: chat_structured() {confidence: 0.6, amount: MYR 3500}
+
+    par Parallel execution
+        Intel->>Intel: tool-calling loop → no duplicates
+        Intel-->>Merge: IntelligenceReport {proceed}
+    and
+        Policy->>Policy: POL-007: receipt present, no hard block
+        Policy-->>Merge: PolicyReport {fast_reject: false}
+    end
+
+    Merge->>Supervisor: normal path
+    Supervisor->>Supervisor: LLM review (visit 1) → route_back_to_intelligence
+    Supervisor-->>Intel: loop-back: dig deeper on vendor history
+
+    Intel->>Intel: search_employee_history() → anomaly z-score > 2.0
+    Intel-->>Supervisor: updated IntelligenceReport
+
+    Supervisor->>Supervisor: LLM review (visit 2) → route_to_approval
+    Supervisor-->>Critic: proceed to Critic
+
+    Critic->>Critic: amount > MYR 2000 → escalate_manager guidance
+    Critic-->>Recorder: ApprovalOutcome {escalate_manager}
+
+    Recorder->>Ledger: write LedgerRecord
+    Recorder->>Manager: notification: "role:direct_manager"
+    Recorder-->>API: terminal=true
+    API-->>Employee: 200 {decision: escalate_manager}
+    Manager->>Manager: reviews claim manually
+```
 
 ---
 
@@ -42,7 +201,7 @@ graph TD
 
 ### 1. Intake
 
-**File:** `app/agents/intake.py`
+**File:** `backend/agents/intake.py`
 
 **Trigger:** `POST /api/submit` with a `ReimbursementSubmission` payload.
 
@@ -64,7 +223,7 @@ LangGraph branches. This cuts per-claim latency by approximately 23–42%.
 
 #### 2a. Intelligence (Tool-Calling Loop)
 
-**File:** `app/agents/intelligence.py`
+**File:** `backend/agents/intelligence.py`
 
 **Trigger:** Always runs after Intake. Also triggered by Supervisor's
 `route_back_to_intelligence`.
@@ -83,7 +242,7 @@ A final `chat_structured()` call synthesises all evidence into the structured re
 
 #### 2b. Policy Check (Deterministic Python)
 
-**Defined in:** `app/graph.py` (`policy_check_node`) calling `app/tools/policy_engine.py`
+**Defined in:** `backend/graph.py` (`policy_check_node`) calling `backend/tools/policy_engine.py`
 
 **Trigger:** Always runs after Intake (parallel to Intelligence). Also triggered by
 Supervisor's `route_back_to_policy`.
@@ -101,7 +260,7 @@ Supervisor's `route_back_to_policy`.
 
 ### 3. Merge + Fast-Reject Route
 
-**Node:** `merge_intel_policy` in `app/graph.py`
+**Node:** `merge_intel_policy` in `backend/graph.py`
 
 Fan-in passthrough after both parallel branches complete. Reconciles POL-006:
 if Intelligence flagged `is_likely_duplicate=True`, ensures the Policy report
@@ -117,7 +276,7 @@ The fast-reject path saves ~7 seconds per hard-violation claim.
 
 ### 4. Supervisor (LLM-Driven Routing)
 
-**File:** `app/agents/supervisor.py`
+**File:** `backend/agents/supervisor.py`
 
 **Trigger:** Runs after `merge_intel_policy` when no fast-reject. May run again
 if a loop-back route was taken.
@@ -135,7 +294,7 @@ emits `request_human_escalation` directly.
 
 ### 5a. Critic (via `route_to_approval` or fast-reject)
 
-**File:** `app/agents/critic.py`
+**File:** `backend/agents/critic.py`
 
 **Action:** Adversarial single LLM call. Tries to find the strongest rejection
 argument. Only emits `auto_approve` when no defensible counter-argument exists.
@@ -162,7 +321,7 @@ ambiguity) changes which hard rules apply.
 
 ### 5c. Human Escalation (via `request_human_escalation`)
 
-**Node:** `escalate_node` in `app/graph.py`
+**Node:** `escalate_node` in `backend/graph.py`
 
 Packages the Supervisor's `reasoning` as an `escalate_manager` `ApprovalOutcome`.
 No LLM call. Proceeds directly to Recorder.
@@ -171,7 +330,7 @@ No LLM call. Proceeds directly to Recorder.
 
 ### 5d. User Clarification (via `request_user_clarification`)
 
-**Node:** `clarify_node` in `app/graph.py`
+**Node:** `clarify_node` in `backend/graph.py`
 
 Packages `SupervisorDecision.clarification_questions` as a `request_info`
 `ApprovalOutcome`. No LLM call. The graph terminates; the API response includes
@@ -182,7 +341,7 @@ requested details.
 
 ### 6. Recorder
 
-**File:** `app/agents/recorder.py`
+**File:** `backend/agents/recorder.py`
 
 Deterministic — no LLM. Writes a `LedgerRecord` to `data/ledger.json` and
 sets `state["terminal"] = True`.

@@ -1,11 +1,11 @@
-"""Hand-curated `ReimbursementSubmission` scenarios.
+﻿"""Hand-curated `ReimbursementSubmission` scenarios.
 
 Each scenario exercises a distinct routing path through the v2 graph.
 Adding a new path requires a new entry here AND a new row in `expected.yaml`.
 """
 from __future__ import annotations
 
-from app.schemas import ReimbursementSubmission
+from backend.schemas import ReimbursementSubmission
 
 PAYLOADS: dict[str, ReimbursementSubmission] = {
     "clean": ReimbursementSubmission(

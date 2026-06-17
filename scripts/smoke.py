@@ -1,4 +1,4 @@
-"""End-to-end smoke test — invokes the v2 graph against 5 canned scenarios
+﻿"""End-to-end smoke test — invokes the v2 graph against 5 canned scenarios
 and prints a compact summary. Run: `python -m scripts.smoke`
 
 This script mocks the ILMU LLM when ILMU_API_KEY=dev-key so the graph
@@ -16,9 +16,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from app import llm  # noqa: E402
-from app.config import settings, wire_langsmith  # noqa: E402
-from app.schemas import ReimbursementSubmission  # noqa: E402
+from backend import llm  # noqa: E402
+from backend.config import settings, wire_langsmith  # noqa: E402
+from backend.schemas import ReimbursementSubmission  # noqa: E402
 
 
 SCENARIOS = {
@@ -153,7 +153,7 @@ def _install_stub_llm() -> None:
                 recommendation="proceed", rationale="Defer to Supervisor."))
 
         if name == "SupervisorDecision":
-            from app.schemas import SupervisorRoute
+            from backend.schemas import SupervisorRoute
             intel_dup = "block_duplicate" in full_low
             intel_alt = "suggest_alternative" in full_low
             fast_rej = "fast_reject: true" in full_low
@@ -189,7 +189,7 @@ def _install_stub_llm() -> None:
                 focus_areas=[]))
 
         if name == "ApprovalOutcome":
-            from app.schemas import ApprovalDecision
+            from backend.schemas import ApprovalDecision
             if "7800" in full_low or "datadog" in claim_blob:
                 return schema.model_validate(dict(decision=ApprovalDecision.ESCALATE_FINANCE.value,
                     approver_role="finance_controller",
@@ -239,7 +239,7 @@ def main() -> None:
     os.environ["LANGCHAIN_TRACING_V2"] = "false"
     wire_langsmith()
 
-    from app.graph import build_graph
+    from backend.graph import build_graph
     graph = build_graph()
 
     for name, kwargs in SCENARIOS.items():

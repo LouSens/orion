@@ -75,15 +75,36 @@ An employee submits a reimbursement claim — either typed in natural language o
 ### Backend
 ```bash
 pip install -r requirements.txt
-cp .env.example .env   # add your ILMU_API_KEY
-python -m app.main
+cp .env.example .env   # add your ILMU_API_KEY and ORION_API_KEYS
+python main.py
 ```
 
 ### Frontend
 ```bash
-cd app/web/frontend
+cd frontend
 npm install
 npm run dev            # runs on http://localhost:3000
+```
+
+---
+
+## Security
+
+| Control | Implementation |
+|---------|----------------|
+| **API Authentication** | All write endpoints (`POST /api/submit`, `POST /api/parse-document`, `DELETE /api/ledger`) require an `X-API-Key` header (or `?api_key=` query param). Configured via `ORION_API_KEYS` (comma-separated list). |
+| **Rate Limiting** | Sliding-window per-IP limiter: 10 req/60 s on `/api/submit`, 120 req/60 s on all other `/api/*` routes. Returns `HTTP 429` with `Retry-After` header. |
+| **Input Sanitisation** | All free-text fields are scanned for prompt-injection patterns before entering the workflow. Fields exceeding length caps are silently truncated. |
+
+To generate a production API key:
+```bash
+python -c "import secrets; print(secrets.token_hex(32))"
+```
+Then set `ORION_API_KEYS=<your-key>` in `.env`.
+
+Send it in requests:
+```bash
+curl -H "X-API-Key: <your-key>" http://localhost:8000/api/submit ...
 ```
 
 ---
@@ -97,7 +118,7 @@ orion/
 │       ├── ci.yml                        # PR gate — lint, unit, integration, coverage
 │       └── nightly.yml                   # Scheduled live regression against real APIs
 │
-├── app/
+├── backend/                              # Python backend (FastAPI + LangGraph)
 │   ├── agents/
 │   │   ├── __init__.py
 │   │   ├── critic.py                     # Approval / adversarial decision agent
@@ -114,38 +135,42 @@ orion/
 │   │   ├── policy_engine.py              # Deterministic policy rule evaluator
 │   │   ├── policy_store.py               # Policy JSON loader
 │   │   └── subscription_catalog.py       # Org SaaS catalog + fuzzy candidate search
-│   ├── web/
-│   │   └── frontend/
-│   │       ├── src/
-│   │       │   ├── api/
-│   │       │   │   ├── client.ts         # Typed fetch client for all backend endpoints
-│   │       │   │   └── types.ts          # Request / response TypeScript types
-│   │       │   ├── components/
-│   │       │   │   └── DashboardElements.tsx  # BentoCard, Skeleton, StatusBadge
-│   │       │   ├── context/
-│   │       │   │   ├── AuthContext.tsx   # Role & username state
-│   │       │   │   └── ToastContext.tsx  # Global toast notifications
-│   │       │   ├── lib/
-│   │       │   │   └── utils.ts          # clsx / tailwind-merge helpers
-│   │       │   ├── pages/
-│   │       │   │   ├── HeroPage.tsx      # Role-based login landing page
-│   │       │   │   ├── EmployeeDashboard.tsx  # Claim submission wizard + history
-│   │       │   │   ├── ManagerDashboard.tsx   # Swipe-to-approve card interface
-│   │       │   │   └── FinanceDashboard.tsx   # Ledger table + policy + analytics
-│   │       │   ├── App.tsx               # SPA router (/, /employee, /manager, /finance)
-│   │       │   ├── constants.ts          # Shared mock data and constants
-│   │       │   ├── index.css             # Tailwind base styles
-│   │       │   └── main.tsx              # React entry point
-│   │       ├── index.html
-│   │       ├── package.json
-│   │       ├── tsconfig.json
-│   │       └── vite.config.ts
 │   ├── config.py                         # Pydantic settings (ILMU, LangSmith, thresholds)
 │   ├── graph.py                          # LangGraph workflow assembly & conditional edges
 │   ├── llm.py                            # ILMU GLM-5.1 client with retry & JSON-mode
 │   ├── main.py                           # FastAPI entrypoint & API endpoints
 │   ├── schemas.py                        # Pydantic contracts for all agent I/O
 │   └── state.py                          # Shared WorkflowState TypedDict
+│
+├── frontend/                             # React SPA frontend
+│   ├── e2e/
+│   │   └── login.spec.ts                 # Playwright E2E tests
+│   ├── src/
+│   │   ├── api/
+│   │   │   ├── client.ts                 # Typed fetch client for all backend endpoints
+│   │   │   └── types.ts                  # Request / response TypeScript types
+│   │   ├── components/
+│   │   │   └── DashboardElements.tsx     # BentoCard, Skeleton, StatusBadge
+│   │   ├── context/
+│   │   │   ├── AuthContext.tsx           # Role & username state
+│   │   │   └── ToastContext.tsx          # Global toast notifications
+│   │   ├── lib/
+│   │   │   └── utils.ts                  # clsx / tailwind-merge helpers
+│   │   ├── pages/
+│   │   │   ├── HeroPage.tsx              # Role-based login landing page
+│   │   │   ├── EmployeeDashboard.tsx     # Claim submission wizard + history
+│   │   │   ├── ManagerDashboard.tsx      # Swipe-to-approve card interface
+│   │   │   └── FinanceDashboard.tsx      # Ledger table + policy + analytics
+│   │   ├── test/                         # Frontend unit tests
+│   │   ├── App.tsx                       # SPA router (/, /employee, /manager, /finance)
+│   │   ├── constants.ts                  # Shared mock data and constants
+│   │   ├── index.css                     # Tailwind base styles
+│   │   └── main.tsx                      # React entry point
+│   ├── index.html
+│   ├── package.json
+│   ├── tsconfig.json
+│   ├── vite.config.ts
+│   └── vitest.config.ts
 │
 ├── data/
 │   ├── ledger.json                       # Persistent claim records
@@ -158,12 +183,7 @@ orion/
 │   ├── tools.md                          # Tool implementations and contracts
 │   └── workflow.md                       # Execution guide and graph topology
 │
-├── plan/                                 # Original design specs (v1 intent)
-│   ├── agents.md
-│   ├── architecture.md
-│   ├── tools.md
-│   └── workflow.md
-│
+
 ├── scripts/
 │   ├── gen_claims.py                     # Synthetic claim generator for testing
 │   └── smoke.py                          # Offline smoke test with canned LLM responses
@@ -199,11 +219,43 @@ orion/
 
 ## Running Tests
 
+### Backend
 ```bash
-python -m pytest --cov=app --cov-fail-under=80 -q
+python -m pytest --cov=backend --cov-fail-under=80 -q
 ```
 
 Current coverage: **85%** — 120 passed, 4 skipped (live API tests).
+
+### Frontend — Unit Tests (Vitest)
+```bash
+cd frontend
+npm install
+npm test              # single run
+npm run test:watch    # watch mode during development
+npm run test:coverage # with coverage report
+```
+
+Test files live in `src/test/`. Current suites:
+
+| File | What it tests |
+|------|---------------|
+| `api.client.test.ts` | All API client functions (fetchLedger, submitClaim, deleteClaim, clearHistory, parseDocument) — happy paths, error codes 401/403/413/415/422/429 |
+| `HeroPage.test.tsx` | Role selection, form validation, auth-code toggle, navigation |
+
+### Frontend — E2E Tests (Playwright)
+```bash
+cd frontend
+npm install
+npx playwright install chromium   # first time only
+npm run test:e2e                   # headless
+npm run test:e2e:ui                # interactive UI runner
+```
+
+E2E specs live in `e2e/`. Current suites:
+
+| File | Scenarios |
+|------|-----------|
+| `login.spec.ts` | Landing page, role selection, empty-form validation, valid employee/manager/finance login, auth-code show/hide toggle |
 
 ---
 
@@ -214,7 +266,7 @@ Current coverage: **85%** — 120 passed, 4 skipped (live API tests).
 | Digital receipts only | Scanned or image-based PDFs return empty text; employees must upload digitally-generated PDFs or paste receipt text manually. |
 | No session persistence | If the workflow routes to `request_info`, the graph terminates and a new submission is required. |
 | Single-tenant ledger | The ledger is a flat JSON file scoped to one organisation — demo use only. |
-| GLM-5.1 only | The LLM client targets the ILMU endpoint; swapping to another provider requires changing `app/llm.py`. |
+| GLM-5.1 only | The LLM client targets the ILMU endpoint; swapping to another provider requires changing `backend/llm.py`. |
 
 ---
 
@@ -224,5 +276,5 @@ Current coverage: **85%** — 120 passed, 4 skipped (live API tests).
 |----------|-------------|
 | [docs/architecture.md](docs/architecture.md) | System components, project layout, and data flow |
 | [docs/agents.md](docs/agents.md) | Per-agent responsibilities, tools, and I/O schemas |
-| [docs/workflow.md](docs/workflow.md) | Step-by-step execution guide and graph topology |
+| [docs/workflow.md](docs/workflow.md) | Step-by-step execution guide, graph topology, and **sequence diagrams** |
 | [docs/tools.md](docs/tools.md) | Tool implementations and data contracts |

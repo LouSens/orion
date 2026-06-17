@@ -1,4 +1,4 @@
-"""Unit tests for SubscriptionCatalog.fuzzy_candidates().
+﻿"""Unit tests for SubscriptionCatalog.fuzzy_candidates().
 
 Requirement: R2 — intelligence agent duplicate detection uses fuzzy pre-filter
 before delegating semantic judgement to the LLM.
@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-from app.tools.subscription_catalog import SubscriptionCatalog
+from backend.tools.subscription_catalog import SubscriptionCatalog
 
 _DATA = Path(__file__).resolve().parent.parent.parent / "data" / "org_subscriptions.json"
 

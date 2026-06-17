@@ -1,4 +1,4 @@
-"""Unit tests for the four Intelligence-agent investigation tools.
+﻿"""Unit tests for the four Intelligence-agent investigation tools.
 
 Requirement: R4 — duplicate detection + cross-referencing rely on these tools.
 Module under test: app/tools/ledger_search.py
@@ -11,7 +11,7 @@ from pathlib import Path
 
 import pytest
 
-from app.tools.ledger_search import (
+from backend.tools.ledger_search import (
     lookup_subscription_catalog,
     search_employee_history,
     search_ledger_by_amount,
@@ -65,7 +65,7 @@ def seeded_data_dir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
         json.dumps(catalog), encoding="utf-8",
     )
 
-    from app.config import settings
+    from backend.config import settings
     monkeypatch.setattr(settings, "data_dir", tmp_path)
     return tmp_path
 
@@ -121,7 +121,7 @@ class TestSearchEmployeeHistory:
 @pytest.fixture
 def empty_data_dir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     """Data dir with no ledger and no catalog — exercises the file-not-found guards."""
-    from app.config import settings
+    from backend.config import settings
     monkeypatch.setattr(settings, "data_dir", tmp_path)
     return tmp_path
 
@@ -189,7 +189,7 @@ class TestDebugLogging:
     def test_merchant_debug_logging_does_not_crash(
         self, seeded_data_dir: Path, monkeypatch: pytest.MonkeyPatch
     ) -> None:
-        from app.config import settings
+        from backend.config import settings
         monkeypatch.setattr(settings, "fuzzy_debug_logging", True)
         out = json.loads(search_ledger_by_merchant.invoke(
             {"merchant_name": "notion", "employee_id": "E-1"}
@@ -199,7 +199,7 @@ class TestDebugLogging:
     def test_catalog_debug_logging_does_not_crash(
         self, seeded_data_dir: Path, monkeypatch: pytest.MonkeyPatch
     ) -> None:
-        from app.config import settings
+        from backend.config import settings
         monkeypatch.setattr(settings, "fuzzy_debug_logging", True)
         out = json.loads(lookup_subscription_catalog.invoke({"merchant_name": "notion"}))
         assert out["found_active"] is True

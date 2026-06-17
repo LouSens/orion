@@ -1,4 +1,4 @@
-"""Unit tests for the graph's routing functions and non-LLM nodes.
+﻿"""Unit tests for the graph's routing functions and non-LLM nodes.
 
 Requirement: R3 — adaptive routing logic in app/graph.py.
 Modules under test: app/graph.py (`_fast_reject_route`, `_supervisor_route`,
@@ -8,14 +8,14 @@ These are pure functions over WorkflowState — no LLM, no I/O.
 """
 from __future__ import annotations
 
-from app.graph import (
+from backend.graph import (
     _fast_reject_route,
     _supervisor_route,
     clarify_node,
     escalate_node,
     merge_intel_policy_node,
 )
-from app.schemas import (
+from backend.schemas import (
     ApprovalDecision,
     IntelligenceReport,
     PolicyReport,

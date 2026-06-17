@@ -82,11 +82,11 @@ def tmp_data_dir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     ledger_path = tmp_path / "ledger.json"
     ledger_path.write_text(json.dumps({"records": []}), encoding="utf-8")
 
-    from app.config import settings
+    from backend.config import settings
     monkeypatch.setattr(settings, "data_dir", tmp_path)
 
     # Retarget any already-instantiated Ledger singletons.
-    for module_path in ("app.main", "app.agents.recorder"):
+    for module_path in ("backend.main", "backend.agents.recorder"):
         try:
             mod = __import__(module_path, fromlist=["_ledger", "ledger"])
         except ImportError:
@@ -226,7 +226,7 @@ def _build_fake_chat_structured():
             ))
 
         if name == "SupervisorDecision":
-            from app.schemas import SupervisorRoute
+            from backend.schemas import SupervisorRoute
             intel_dup = "block_duplicate" in full_low
             intel_alt = "suggest_alternative" in full_low
             fast_rej = "fast_reject: true" in full_low
@@ -249,7 +249,7 @@ def _build_fake_chat_structured():
             ))
 
         if name == "ApprovalOutcome":
-            from app.schemas import ApprovalDecision
+            from backend.schemas import ApprovalDecision
             if "7800" in full_low or "datadog" in low:
                 return schema.model_validate(dict(
                     decision=ApprovalDecision.ESCALATE_FINANCE.value,
@@ -301,8 +301,8 @@ def stub_llm(monkeypatch: pytest.MonkeyPatch):
     so monkeypatching `app.llm.chat_structured` alone is not enough — the
     binding inside each agent module must also be replaced.
     """
-    from app import llm
-    from app.agents import critic, intake, intelligence, supervisor
+    from backend import llm
+    from backend.agents import critic, intake, intelligence, supervisor
 
     fake = _build_fake_chat_structured()
     monkeypatch.setattr(llm, "chat_structured", fake)

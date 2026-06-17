@@ -1,4 +1,4 @@
-"""Full-graph integration tests using the deterministic stub LLM.
+﻿"""Full-graph integration tests using the deterministic stub LLM.
 
 Requirement: R1, R2, R3, R4, R5, R6 — exercises the entire LangGraph workflow
 against the canned-output fake LLM, asserting each scenario lands in its
@@ -11,7 +11,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from app.graph import build_graph
+from backend.graph import build_graph
 from tests.fixtures.payloads import PAYLOADS
 
 EXPECTED_PATH = Path(__file__).resolve().parent.parent / "fixtures" / "expected.yaml"
@@ -61,7 +61,7 @@ def test_scenario_lands_in_expected_band(
 @pytest.mark.slow
 def test_recorder_writes_ledger_entry(stub_llm, tmp_data_dir: Path) -> None:  # noqa: ARG001
     """Recorder must persist the decision so /api/audit endpoints have data."""
-    from app.tools.ledger import Ledger
+    from backend.tools.ledger import Ledger
 
     graph = build_graph()
     final = graph.invoke({

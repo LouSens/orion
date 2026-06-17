@@ -1,4 +1,4 @@
-"""Unit tests for the policy JSON loader.
+﻿"""Unit tests for the policy JSON loader.
 
 Requirement: R3 — policy rule metadata feeds the policy engine + Supervisor.
 Module under test: app/tools/policy_store.py
@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-from app.tools.policy_store import PolicyStore
+from backend.tools.policy_store import PolicyStore
 
 
 @pytest.fixture

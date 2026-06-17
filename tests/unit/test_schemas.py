@@ -1,4 +1,4 @@
-"""Schema validation contracts.
+﻿"""Schema validation contracts.
 
 Requirement: R2 — every agent transition is gated on a structured pydantic
 output. These tests pin the contracts so a careless schema rename can't pass
@@ -9,7 +9,7 @@ from __future__ import annotations
 import pytest
 from pydantic import ValidationError
 
-from app.schemas import (
+from backend.schemas import (
     ApprovalDecision,
     ApprovalOutcome,
     IntakeClaim,

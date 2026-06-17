@@ -1,4 +1,4 @@
-"""Unit tests for the deterministic policy engine.
+﻿"""Unit tests for the deterministic policy engine.
 
 Requirement: R3 — adaptive routing depends on hard-rule signals.
 Module under test: app/tools/policy_engine.py
@@ -7,8 +7,8 @@ from __future__ import annotations
 
 import pytest
 
-from app.schemas import IntakeClaim
-from app.tools.policy_engine import evaluate_hard_rules
+from backend.schemas import IntakeClaim
+from backend.tools.policy_engine import evaluate_hard_rules
 
 
 def _claim(**overrides) -> IntakeClaim:

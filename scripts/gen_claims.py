@@ -1,4 +1,4 @@
-"""Synthetic claim generator for nightly soak.
+﻿"""Synthetic claim generator for nightly soak.
 
 Produces N perturbed `ReimbursementSubmission` payloads by varying vendor
 casing, currency, and amount around the policy thresholds. Output is
@@ -19,7 +19,7 @@ import random
 from pathlib import Path
 from typing import Iterator
 
-from app.schemas import ReimbursementSubmission
+from backend.schemas import ReimbursementSubmission
 
 # Deliberately small set: synthetics are for *threshold-edge* coverage,
 # not creative diversity.

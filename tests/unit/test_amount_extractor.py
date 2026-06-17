@@ -1,4 +1,4 @@
-"""Unit tests for the deterministic regex amount extractor.
+﻿"""Unit tests for the deterministic regex amount extractor.
 
 Requirement: R10 — anti-hallucination ground-truth amount anchor.
 Module under test: app/tools/amount_extractor.py
@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import pytest
 
-from app.tools.amount_extractor import (
+from backend.tools.amount_extractor import (
     amount_discrepancy_flag,
     extract_largest_amount,
 )

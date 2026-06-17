@@ -1,4 +1,4 @@
-"""Live ILMU + LangSmith regression tests. SKIPPED unless `--runlive` is passed.
+﻿"""Live ILMU + LangSmith regression tests. SKIPPED unless `--runlive` is passed.
 
 Requirement: R7 — verifies the production LLM path actually works end-to-end.
 Used in the nightly CI workflow and for manual local validation.
@@ -17,7 +17,7 @@ import pytest
 import yaml
 from fastapi.testclient import TestClient
 
-from app.config import langsmith_is_live, settings, wire_langsmith
+from backend.config import langsmith_is_live, settings, wire_langsmith
 from tests.fixtures.payloads import PAYLOADS
 
 EXPECTED_PATH = Path(__file__).resolve().parent.parent / "fixtures" / "expected.yaml"
@@ -37,7 +37,7 @@ def real_client(tmp_data_dir: Path) -> TestClient:  # noqa: ARG001
     # `wire_langsmith()` will export tracing env vars from settings if a real
     # LangSmith key is present; otherwise live runs proceed without tracing.
     wire_langsmith()
-    from app.main import app
+    from backend.main import app
     return TestClient(app)
 
 

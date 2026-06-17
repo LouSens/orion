@@ -1,4 +1,4 @@
-"""Unit tests for the JSON-file ledger.
+﻿"""Unit tests for the JSON-file ledger.
 
 Requirement: R6 — durable record for the recorder + audit endpoints.
 Module under test: app/tools/ledger.py
@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-from app.tools.ledger import Ledger
+from backend.tools.ledger import Ledger
 
 
 @pytest.fixture

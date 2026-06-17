@@ -1,11 +1,11 @@
-# Orion Architecture — Current Implementation
+﻿# Orion Architecture — Current Implementation
 
 Orion is an API-first backend that orchestrates LLM agents for subscription
 reimbursement approval. All agents are connected via a LangGraph state graph.
 
 ## System Components
 
-### 1. API Layer — `app/main.py` (FastAPI)
+### 1. API Layer — `backend/main.py` (FastAPI)
 
 - Accepts `POST /api/submit` with a JSON `ReimbursementSubmission` body.
 - Idempotency gate: SHA-256 hashes each submission; duplicate POSTs return the
@@ -14,9 +14,9 @@ reimbursement approval. All agents are connected via a LangGraph state graph.
   LangSmith trace URLs.
 - Exposes `GET /api/health`, `GET /api/ledger`, `GET /api/audit/export` (CSV),
   and `GET /api/audit/report` (Markdown summary).
-- Hosts a minimal HTML frontend at `app/web/index.html`.
+- Hosts a minimal HTML frontend at `frontend/index.html`.
 
-### 2. Orchestration Layer — `app/graph.py` (LangGraph)
+### 2. Orchestration Layer — `backend/graph.py` (LangGraph)
 
 Core logic as a directed state graph. **Non-linear** — parallel branches for
 Intelligence and Policy, a fast-reject short-circuit, and a Supervisor that
@@ -44,13 +44,13 @@ START → intake → [intelligence ∥ policy_check] → merge_intel_policy
 runs. At `supervisor_visits >= 3` the LLM call is skipped and the graph forces
 `request_human_escalation` to prevent infinite loops.
 
-**State object:** `WorkflowState` (`app/state.py`) — a `TypedDict` passed
+**State object:** `WorkflowState` (`backend/state.py`) — a `TypedDict` passed
 node-to-node, accumulating outputs: `intake`, `intelligence`, `policy`,
 `supervisor`, `approval`, `record`.
 
-### 3. Agent Layer — `app/agents/` (LangChain + GLM-5.1 via ILMU)
+### 3. Agent Layer — `backend/agents/` (LangChain + GLM-5.1 via ILMU)
 
-All LLM agents call `chat_structured()` from `app/llm.py`, which:
+All LLM agents call `chat_structured()` from `backend/llm.py`, which:
 - Injects the Pydantic output schema into the system prompt.
 - Retries once on parse/validation failure (error fed back to the model).
 - Falls back from JSON-mode to schema-injection-only if the server rejects it.
@@ -59,7 +59,7 @@ All LLM agents call `chat_structured()` from `app/llm.py`, which:
 The Intelligence Agent uniquely runs a **tool-calling loop** (up to 5
 iterations) where the LLM drives its own investigation.
 
-### 4. Tooling Layer — `app/tools/`
+### 4. Tooling Layer — `backend/tools/`
 
 | File | Purpose |
 |---|---|
@@ -95,7 +95,7 @@ data/
 
 ```
 orion/
-├── app/
+├── backend/
 │   ├── main.py             # FastAPI application entry point
 │   ├── graph.py            # LangGraph workflow (nodes + edges)
 │   ├── state.py            # WorkflowState TypedDict

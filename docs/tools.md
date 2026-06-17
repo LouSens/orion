@@ -1,6 +1,6 @@
-# Orion Tools Reference — Current Implementation
+﻿# Orion Tools Reference — Current Implementation
 
-All tools live under `app/tools/`. This document describes each file's
+All tools live under `backend/tools/`. This document describes each file's
 purpose and public API as implemented.
 
 ---
